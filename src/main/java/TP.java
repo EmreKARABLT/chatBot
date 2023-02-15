@@ -1,21 +1,20 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TextProcessor {
+public class TP {
 	public static String[] propositions = new String[]{"aboard" ,"about" ,"above" ,"across" ,"after" ,"against" ,"along" ,"amid" ,"among" ,"anti" ,"around" ,"as" ,"at" ,"before" ,"behind" ,"below" ,"beneath" ,"beside" ,"besides" ,"between" ,"beyond" ,"but" ,"by" ,"concerning" ,"considering" ,"despite" ,"down" ,"during" ,"except" ,"excepting" ,"excluding" ,"following" ,"for" ,"from" ,"in" ,"inside" ,"into" ,"like" ,"minus" ,"near" ,"of" ,"off" ,"on" ,"onto" ,"opposite" ,"outside" ,"over" ,"past" ,"per" ,"plus" ,"regarding" ,"round" ,"save" ,"since" ,"than" ,"through" ,"to" ,"toward" ,"towards" ,"under" ,"underneath" ,"unlike" ,"until" ,"up" ,"upon" ,"versus" ,"via" ,"with" ,"within" ,"without"};
 	private static String[] questionPronouns = new String[]{"when", "where", "who", "whom", "which", "why", "what"};
+	private static ArrayList<String> pro= new ArrayList<String>(List.of(propositions));
+	private static ArrayList<String> qp= new ArrayList<String>(List.of(questionPronouns));
+	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
+	private static ArrayList<String> adverbs = csv("src/main/java/adverbs.csv");
 
-	public static String regExForSearching(String template) {
-
-		ArrayList<String> partitionedTemplate = splitSentenceRegexSearch(template);
-		String s = splitArrayToString(partitionedTemplate);
-		Pattern pattern = Pattern.compile("\\s*<.+?>\\s*");
-		Matcher matcher = pattern.matcher(s);
-
-		return "("+matcher.replaceAll("|")+")";
-	}
 
 	public static Boolean isQuestion(String question) {
 		question = question.toLowerCase(Locale.ROOT);
@@ -27,16 +26,7 @@ public class TextProcessor {
 		}
 		return false;
 	}
-	public static ArrayList<String> splitSentenceRegexSearch(String sentence){
-//		Pattern pattern = Pattern.compile("([^A-z0-9\\s])", Pattern.CASE_INSENSITIVE);
-			Pattern pattern = Pattern.compile("[^\\w\\s<>\\d]", Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(sentence);
-			sentence = matcher.replaceAll(" ").toLowerCase(Locale.ROOT);
-			ArrayList<String> split = new ArrayList<>();
-			String[] q = sentence.split("\s+");
-			Collections.addAll(split, q);
-			return split;
-	}
+
 	public static ArrayList<String> splitSentence(String question){
 		Pattern pattern = Pattern.compile("[^A-z0-9\\s]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(question);
@@ -44,11 +34,13 @@ public class TextProcessor {
 		System.out.println(question);
 		ArrayList<String> split = new ArrayList<>();
 		String[] q = question.split("[*\s]");
-		ArrayList<String> pro= new ArrayList<String>(List.of(propositions));
-		ArrayList<String> qp= new ArrayList<String>(List.of(questionPronouns));
+
 		for (String word : q) {
 			if (!word.isEmpty()
-//					&& !pro.contains(word)&&!qp.contains(word)
+//					&& !pro.contains(word)
+//					&& !qp.contains(word)
+					&& !verbs.contains(word)
+					&& !adverbs.contains(word)
 			) {
 				split.add(word);
 			}
@@ -57,23 +49,26 @@ public class TextProcessor {
 		return split;
 	}
 
-	public static String splitArrayToString(ArrayList<String> splitSentence){
-		StringBuilder combinedString = new StringBuilder();
-		for (int i = 0 ; i < splitSentence.size() ; i++){
-			combinedString.append(splitSentence.get(i));
-			if(i < splitSentence.size()-1)
-				combinedString.append(" ");
+	public static ArrayList<String> csv(String filename){
+		ArrayList<String> records = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] values = line.split("[,]");
+				records.addAll(Arrays.asList(values));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return combinedString.toString();
+		return records;
 	}
 
 	public static void main(String[] args) {
-		String q = "Which lectures are there on Monday at 9?";
+		String q = "Which classroom is dedicated for Math course today?";
 //		String temp = "Which lectures are there on <DAY> at <TIME>?";
 //		System.out.println(regExForSearching(temp));
 		System.out.println(splitSentence(q));
 		System.out.println(isQuestion(q));
 		System.out.println();
-
 	}
 }
