@@ -64,7 +64,7 @@ public class TP {
 	}
 
 	public static void main(String[] args) {
-		String q = "Which classroom is dedicated for Math course today?";
+		String q = "Which classroom for Math course today?";
 //		String temp = "Which lectures are there on <DAY> at <TIME>?";
 //		System.out.println(regExForSearching(temp));
 		System.out.println(splitSentence(q));
