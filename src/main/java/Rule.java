@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,5 +38,28 @@ public class Rule{
 		this.actions = actions;
 	}
 
+	/**
+	 * This method compares given rule with "this" and checks if they are the same rules by comparing their template question
+	 * @param o given Rule
+	 * @return if templates of given rules are the same it returns TRUE , otherwise FALSE
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Rule rule = (Rule) o;
+		return template.equals(rule.template);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(template);
+	}
+
+	@Override
+	public String toString() {
+		return "Rule{" +
+				"template='" + template + '\'' +
+				'}';
+	}
 }

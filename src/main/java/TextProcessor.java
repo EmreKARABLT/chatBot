@@ -12,7 +12,8 @@ public class TextProcessor {
 	private static String[] questionPronouns = new String[]{"when", "where", "who", "whom", "which", "why", "what"};
 	private static ArrayList<String> pro= new ArrayList<String>(List.of(propositions));
 	private static ArrayList<String> qp= new ArrayList<String>(List.of(questionPronouns));
-	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
+//	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
+	private static ArrayList<String> verbs = new ArrayList<>();
 	private static ArrayList<String> adverbs = csv("src/main/java/stopwords.csv");
 
 
