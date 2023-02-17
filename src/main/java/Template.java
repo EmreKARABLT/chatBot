@@ -21,8 +21,9 @@ public class Template {
 			for (String value :	slots.get(key)) {
 				Pattern pattern = Pattern.compile(value ,Pattern.CASE_INSENSITIVE);
 				Matcher matcher = pattern.matcher(word);
+
 				if(matcher.matches())
-				 return matcher.replaceAll("<"+key+">" );
+				 return matcher.replaceAll(key);
 			}
 		}
 		return null;
@@ -35,9 +36,22 @@ public class Template {
 				Matcher matcher = pattern.matcher(question);
 				question = matcher.replaceAll("<"+key+">" );
 			}
-
 		}
 		return question;
+	}
+	public ArrayList<String> getKeywordsAndPlaceholders(String question) {
+		ArrayList<String> split = TP.splitSentence(question);
+		for (int i = 0 ; i < split.size() ; i++) {
+			String word = split.get(i);
+			if (categorizeWord( word ) != null ) {
+				split.set(i,categorizeWord(word));
+			}
+		}
+		return split;
+	}
+
+	public String getTemplate() {
+		return template;
 	}
 
 	public static void main(String[] args) {
@@ -48,10 +62,13 @@ public class Template {
 		}};
 		Template template = new Template(temp, slots, null);
 
-		System.out.println(template.parseQuestion("which lectures are there on Monday at 13"));
+//		System.out.println(template.parseQuestion("which lectures are there on Saturday"));
 		System.out.println(template.categorizeWord("13"));
 		System.out.println(template.categorizeWord("monday"));
 		System.out.println(template.categorizeWord("sunday"));
+		System.out.println(template.getKeywordsAndPlaceholders("which lectures are there on Sunday"));;
+		System.out.println(template.getKeywordsAndPlaceholders("Which lectures are there on <DAY> at <TIME>?"));;
+
 	}
 
 

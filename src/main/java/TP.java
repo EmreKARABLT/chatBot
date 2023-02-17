@@ -13,7 +13,7 @@ public class TP {
 	private static ArrayList<String> pro= new ArrayList<String>(List.of(propositions));
 	private static ArrayList<String> qp= new ArrayList<String>(List.of(questionPronouns));
 	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
-	private static ArrayList<String> adverbs = csv("src/main/java/adverbs.csv");
+	private static ArrayList<String> adverbs = csv("src/main/java/stopwords.csv");
 
 
 	public static Boolean isQuestion(String question) {
@@ -31,7 +31,6 @@ public class TP {
 		Pattern pattern = Pattern.compile("[^A-z0-9\\s]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(question);
 		question = matcher.replaceAll(" ").toLowerCase(Locale.ROOT);
-		System.out.println(question);
 		ArrayList<String> split = new ArrayList<>();
 		String[] q = question.split("[*\s]");
 
