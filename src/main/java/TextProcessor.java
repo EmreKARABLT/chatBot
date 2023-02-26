@@ -7,13 +7,14 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TP {
+public class TextProcessor {
 	public static String[] propositions = new String[]{"aboard" ,"about" ,"above" ,"across" ,"after" ,"against" ,"along" ,"amid" ,"among" ,"anti" ,"around" ,"as" ,"at" ,"before" ,"behind" ,"below" ,"beneath" ,"beside" ,"besides" ,"between" ,"beyond" ,"but" ,"by" ,"concerning" ,"considering" ,"despite" ,"down" ,"during" ,"except" ,"excepting" ,"excluding" ,"following" ,"for" ,"from" ,"in" ,"inside" ,"into" ,"like" ,"minus" ,"near" ,"of" ,"off" ,"on" ,"onto" ,"opposite" ,"outside" ,"over" ,"past" ,"per" ,"plus" ,"regarding" ,"round" ,"save" ,"since" ,"than" ,"through" ,"to" ,"toward" ,"towards" ,"under" ,"underneath" ,"unlike" ,"until" ,"up" ,"upon" ,"versus" ,"via" ,"with" ,"within" ,"without"};
 	private static String[] questionPronouns = new String[]{"when", "where", "who", "whom", "which", "why", "what"};
 	private static ArrayList<String> pro= new ArrayList<String>(List.of(propositions));
 	private static ArrayList<String> qp= new ArrayList<String>(List.of(questionPronouns));
-	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
-	private static ArrayList<String> adverbs = csv("src/main/java/adverbs.csv");
+//	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
+	private static ArrayList<String> verbs = new ArrayList<>();
+	private static ArrayList<String> adverbs = csv("src/main/java/stopwords.csv");
 
 
 	public static Boolean isQuestion(String question) {
@@ -31,7 +32,6 @@ public class TP {
 		Pattern pattern = Pattern.compile("[^A-z0-9\\s]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(question);
 		question = matcher.replaceAll(" ").toLowerCase(Locale.ROOT);
-		System.out.println(question);
 		ArrayList<String> split = new ArrayList<>();
 		String[] q = question.split("[*\s]");
 
@@ -64,7 +64,7 @@ public class TP {
 	}
 
 	public static void main(String[] args) {
-		String q = "Which classroom is dedicated for Math course today?";
+		String q = "Which classroom for Math course today?";
 //		String temp = "Which lectures are there on <DAY> at <TIME>?";
 //		System.out.println(regExForSearching(temp));
 		System.out.println(splitSentence(q));
