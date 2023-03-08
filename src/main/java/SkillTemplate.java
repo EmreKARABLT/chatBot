@@ -38,7 +38,6 @@ public class SkillTemplate {
         this.slots = slots;
     }
 
-    //override the to string method
     @Override
     public String toString() {
         return "SkillTemplate{" +
