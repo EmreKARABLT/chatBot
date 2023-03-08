@@ -43,9 +43,9 @@ public class SkillTemplate {
     public String toString() {
         return "SkillTemplate{" +
                 "question='" + question + '\'' +
-                ", keywords=" + keywords +
-                ", slots=" + slots +
-                ", actions=" + actions +
+                "\n keywords=" + keywords +
+                "\n slots=" + slots +
+                "\n actions=" + actions +
                 '}';
     }
 

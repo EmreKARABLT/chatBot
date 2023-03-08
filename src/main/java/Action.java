@@ -20,9 +20,9 @@ public class Action {
 
     @Override
     public String toString() {
-        return "Action : " +
+        return "\nAction : " +
                 "slotValues=" + slotValues +
-                ", answer='" + answer + '\'';
+                "\n answer='" + answer + '\'';
 
     }
 
