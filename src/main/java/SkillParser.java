@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class SkillParser {
-    // method that reads a txt file line by line in db folder
     public static void main(String[] args) throws FileNotFoundException {
         readSkillsFromFile("skill");
         // System.out.println(readRawTextFromFile("skill"));
@@ -15,6 +14,14 @@ public class SkillParser {
         // writeToFile("test", "Question Which lectures are there on <DAY> at <TIME> \n Slot <DAY> Monday");
     }
 
+
+   
+    /**
+	 * It writes everything that is in content to a txt file called filename
+	 * @param filename the string which will be used for the filename, dont put .txt at the end
+
+     * @param content the content that will be in the .txt file
+	 */
     public static void writeToFile(String filename, String content) {
         try {
             File file = new File("src/main/java/db/" + filename + ".txt");
@@ -29,6 +36,11 @@ public class SkillParser {
 
     }
 
+
+    /**
+	 * It reads all the filenames in the db folder and returns them in an ArrayList
+	 * @return returns the filenames without the .txt extension
+	 */
     public static ArrayList<String> getAllSkills() {
 
         File folder = new File("src/main/java/db/");
@@ -46,6 +58,11 @@ public class SkillParser {
         return skills;
     }
 
+
+    /**
+	
+	 * @return it returns the raw text from a file in the db folder
+	 */
     public static String readRawTextFromFile(String filename) {
         String content = "";
         try {
@@ -61,6 +78,13 @@ public class SkillParser {
         return content;
     }
 
+
+    /**
+	 * It reads a skill from a txt file in the db folder, and parses all the information in it, 
+     * to get an easy to use SkillTemplate object
+	 * @param filename the name of the skill file you want to parse
+	 * @return it returns to the SkillTemplate object with all the information about the Skill
+	 */
     public static SkillTemplate readSkillsFromFile(String filename) throws FileNotFoundException {
         File myObj = new File("src/main/java/db/" + filename + ".txt");
         Scanner myReader = new Scanner(myObj);
