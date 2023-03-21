@@ -5,10 +5,10 @@ import java.util.regex.Pattern;
 public class Rule{
 	public String template;
 	public HashMap< String, ArrayList<String> > slots;
-	public HashMap< String, ArrayList<String> > actions;
+	public ArrayList < HashMap< String, ArrayList<String> >  > actions;
 
 
-	public Rule(String template, HashMap<String, ArrayList<String>> slots , HashMap<String, ArrayList<String>> actions){
+	public Rule(String template, HashMap<String, ArrayList<String>> slots , ArrayList< HashMap<String, ArrayList<String> > > actions){
 		this.template = template.toLowerCase(Locale.ROOT);
 		this.slots = slots;
 		this.actions = actions;
@@ -30,12 +30,21 @@ public class Rule{
 		this.slots = slots;
 	}
 
-	public HashMap<String, ArrayList<String>> getActions() {
-		return actions;
-	}
-
-	public void setActions(HashMap<String, ArrayList<String>> actions) {
-		this.actions = actions;
+	/**
+	 * It categorizes the given words by iterating over the slots of this rule
+	 * @param word the string which will be categorized
+	 * @return it returns to the category if it is found, otherwise returns NULL
+	 */
+	public  ArrayList<String> categorizeWord(String word){
+			for (String key : slots.keySet()) {
+				for (String value :	slots.get(key)) {
+					Pattern pattern = Pattern.compile(value ,Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(word);
+					if(matcher.matches())
+						return new ArrayList<>(Arrays.asList(value, matcher.replaceAll(key)));
+				}
+			}
+		return null;
 	}
 
 	/**
