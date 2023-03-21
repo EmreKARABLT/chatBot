@@ -1,0 +1,47 @@
+package com.view.chatuserinterface;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class MainInterface extends Application {
+
+    Scene menu,assistant,templateSelector,templateBuilder;
+    final int HEIGHT = 600;
+    final int WIDTH = 600;
+    Stage stage;
+
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        this.stage = stage;
+        AssistantPane assistantPane = new AssistantPane(this);
+        assistant = new Scene(assistantPane,WIDTH,HEIGHT);
+
+        MenuPane menuPane = new MenuPane(this);
+        menu = new Scene(menuPane,WIDTH,HEIGHT);
+
+        TemplateSelectorPane templateSelectorPane = new TemplateSelectorPane(this);
+        templateSelector = new Scene(templateSelectorPane,WIDTH,HEIGHT);
+
+        TemplateBuilderPane templateBuilderPane = new TemplateBuilderPane(this);
+        templateBuilder = new Scene(templateBuilderPane,WIDTH,HEIGHT);
+
+        stage.setScene(menu);
+        stage.show();
+
+    }
+
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+    public void switchScene(Scene newScene){
+        stage.setScene(newScene);
+
+    }
+
+}

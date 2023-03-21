@@ -1,0 +1,86 @@
+.my-button{
+    -fx-background-color: #337361;
+    -fx-text-fill: white;
+    -fx-min-width: 75px;
+    -fx-min-height: 37px;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 50px;
+    -fx-max-width: 100px;
+    -fx-max-height: 50px;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+
+}
+.my-button:hover{
+    -fx-background-color: #87eee7;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.menu-pane {
+    -fx-background-color: #222225;
+    -fx-padding: 20px;
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+
+}
+
+.scroll-pane {
+    -fx-background-color: #222225;
+    -fx-padding: 10;
+    -fx-pref-height: 450px;
+    -fx-hbar-policy: never;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #222225;
+}
+
+.scroll-pane .scroll-bar {
+    -fx-background-color: #2f2f33;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-padding: 0 3 0 3;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-padding: 3 0 3 0;
+}
+.label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Roboto Light";
+    -fx-background-color: #38383d;
+    -fx-padding: 10px;
+    -fx-alignment: center-left;
+    -fx-wrap-text: true;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 490px;
+
+}
+.text-field {
+    -fx-text-fill: white;
+    -fx-background-color: #2f2f33;
+    -fx-font-size: 14px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+.text-field-focused {
+    -fx-text-fill: white;
+    -fx-font-family: "Roboto Light";
+    -fx-background-color: #2f2f33;
+    -fx-font-size: 14px;
+    -fx-border-width: 2px;
+    -fx-border-color: rgba(51, 255, 242, 0.57);
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+.content{
+    -fx-background-color: #222225;
+    -fx-pref-height: 450px;
+    -fx-padding: 20px;
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+    -fx-spacing: 10px;
+}

@@ -1,3 +1,5 @@
+package com.Logic;
+
 import java.util.*;
 
 public class RuleController {
@@ -123,7 +125,7 @@ public class RuleController {
 		controller.addRule(template1);
 		controller.addRule(template2);
 
-		String question = "turn the livingroom to Saturday";
+		String question = "what lectures are there on monday at 13";
 		Rule rule = controller.getMatchedRule(question);
 		System.out.println(rule);
 		HashMap<String , String > hm= (rule!= null ) ? controller.getHashMapForActions(rule,question) : null;

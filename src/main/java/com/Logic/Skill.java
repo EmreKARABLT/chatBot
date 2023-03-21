@@ -1,3 +1,5 @@
+package com.Logic;
+
 public interface Skill {
 	default Boolean isQuestion(String question){
 		return false;
