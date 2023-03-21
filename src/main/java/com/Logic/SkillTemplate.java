@@ -39,6 +39,10 @@ public class SkillTemplate {
         this.slots = slots;
     }
 
+    public ArrayList<Action> getActions() {
+        return actions;
+    }
+
     @Override
     public String toString() {
         return "SkillTemplate{" +

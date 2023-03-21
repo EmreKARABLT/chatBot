@@ -9,10 +9,11 @@ import java.io.IOException;
 public class MainInterface extends Application {
 
     Scene menu,assistant,templateSelector,templateBuilder;
-    final int HEIGHT = 600;
+    final int HEIGHT = 800;
     final int WIDTH = 600;
     Stage stage;
 
+    TemplateBuilderPane templateBuilderPane;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -26,7 +27,7 @@ public class MainInterface extends Application {
         TemplateSelectorPane templateSelectorPane = new TemplateSelectorPane(this);
         templateSelector = new Scene(templateSelectorPane,WIDTH,HEIGHT);
 
-        TemplateBuilderPane templateBuilderPane = new TemplateBuilderPane(this);
+        templateBuilderPane = new TemplateBuilderPane(this);
         templateBuilder = new Scene(templateBuilderPane,WIDTH,HEIGHT);
 
         stage.setScene(menu);

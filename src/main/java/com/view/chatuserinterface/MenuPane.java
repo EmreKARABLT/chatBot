@@ -21,7 +21,7 @@ public class MenuPane extends FlowPane {
         templateBtn = new Button("Template Builder");
         templateBtn.getStyleClass().add("my-button");
         templateBtn.setOnAction(e ->{
-            mainInterface.switchScene(mainInterface.templateBuilder);
+            mainInterface.switchScene(mainInterface.templateSelector);
         });
         this.getStyleClass().add("menu-pane");
         this.setAlignment(javafx.geometry.Pos.CENTER);

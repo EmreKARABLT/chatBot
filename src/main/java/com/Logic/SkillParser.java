@@ -25,7 +25,7 @@ public class SkillParser {
 	 */
     public static void writeToFile(String filename, String content) {
         try {
-            File file = new File("src/main/java/Logic/db/" + filename + ".txt");
+            File file = new File("src/main/java/com/Logic/db/" + filename + ".txt");
             file.createNewFile();
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             fw.write(content);
@@ -44,7 +44,7 @@ public class SkillParser {
 	 */
     public static ArrayList<String> getAllSkills() {
 
-        File folder = new File("src/main/java/Logic/db/");
+        File folder = new File("src/main/java/com/Logic/db/");
         File[] listOfFiles = folder.listFiles();
         ArrayList<String> skills = new ArrayList<String>();
 
@@ -67,7 +67,7 @@ public class SkillParser {
     public static String readRawTextFromFile(String filename) {
         String content = "";
         try {
-            File file = new File("src/main/java/Logic/db/" + filename + ".txt");
+            File file = new File("src/main/java/com/Logic/db/" + filename + ".txt");
             Scanner myReader = new Scanner(file);
             while (myReader.hasNextLine()) {
                 content += myReader.nextLine() + "\n";
@@ -87,7 +87,7 @@ public class SkillParser {
 	 * @return it returns to the SkillTemplate object with all the information about the Skill
 	 */
     public static SkillTemplate readSkillsFromFile(String filename) throws FileNotFoundException {
-        File myObj = new File("src/main/java/Logic/db/" + filename + ".txt");
+        File myObj = new File("src/main/java/com/Logic/db/" + filename + ".txt");
         Scanner myReader = new Scanner(myObj);
 
         String question = "";
