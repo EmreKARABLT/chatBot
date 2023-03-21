@@ -123,7 +123,7 @@ public class RuleController {
 		controller.addRule(template1);
 		controller.addRule(template2);
 
-		String question = "turn on the living room light";
+		String question = "turn the livingroom to Saturday";
 		Rule rule = controller.getMatchedRule(question);
 		System.out.println(rule);
 		HashMap<String , String > hm= (rule!= null ) ? controller.getHashMapForActions(rule,question) : null;
