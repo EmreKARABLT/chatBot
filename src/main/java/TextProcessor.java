@@ -14,7 +14,7 @@ public class TextProcessor {
 	private static ArrayList<String> qp= new ArrayList<String>(List.of(questionPronouns));
 //	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
 	private static ArrayList<String> verbs = new ArrayList<>();
-	private static ArrayList<String> adverbs = csv("src/main/java/stopwords.csv");
+	private static ArrayList<String> stopWords = csv("src/main/java/stopwords.csv");
 
 
 	public static Boolean isQuestion(String question) {
@@ -27,21 +27,39 @@ public class TextProcessor {
 		}
 		return false;
 	}
-
-	public static ArrayList<String> splitSentence(String question){
+	public static ArrayList<String> removePunctuations(String question){
 		Pattern pattern = Pattern.compile("[^A-z0-9\\s]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(question);
 		question = matcher.replaceAll(" ").toLowerCase(Locale.ROOT);
-		ArrayList<String> split = new ArrayList<>();
 		String[] q = question.split("[*\s]");
+		ArrayList<String> split = new ArrayList<>(Arrays.asList(q));
+		return split;
+	}
 
-		for (String word : q) {
+
+	public static ArrayList<String> splitSentence(String question){
+		ArrayList<String> splitNP = removePunctuations(question);
+		ArrayList<String> split = new ArrayList<>();
+		for (String word : splitNP) {
 			if (!word.isEmpty()
-//					&& !pro.contains(word)
-//					&& !qp.contains(word)
-					&& !verbs.contains(word)
-					&& !adverbs.contains(word)
+					&& !pro.contains(word)
+					&& !qp.contains(word)
+					//&& !verbs.contains(word)
+					&& !stopWords.contains(word)
 			) {
+				split.add(word);
+			}
+		}
+
+		return split;
+	}
+	
+
+	public static ArrayList<String> removeNoVocabulary(String question,ArrayList<String>voc){
+		ArrayList<String> splitNP = removePunctuations(question);
+		ArrayList<String> split = new ArrayList<>();
+		for (String word : splitNP) {
+			if (!word.isEmpty() && voc.contains(word)) {
 				split.add(word);
 			}
 		}
@@ -61,14 +79,5 @@ public class TextProcessor {
 			e.printStackTrace();
 		}
 		return records;
-	}
-
-	public static void main(String[] args) {
-		String q = "Which classroom for Math course today?";
-//		String temp = "Which lectures are there on <DAY> at <TIME>?";
-//		System.out.println(regExForSearching(temp));
-		System.out.println(splitSentence(q));
-		System.out.println(isQuestion(q));
-		System.out.println();
 	}
 }

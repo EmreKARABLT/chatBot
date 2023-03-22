@@ -1,17 +1,21 @@
 import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class SkillParser {
-    public static void main(String[] args) throws FileNotFoundException {
-        readSkillsFromFile("skill");
-        // System.out.println(readRawTextFromFile("skill"));
-        System.out.println(getAllSkills());
-        // writeToFile("test", "Question Which lectures are there on <DAY> at <TIME> \n Slot <DAY> Monday");
+
+    public static ArrayList<SkillTemplate> getAllSkills() throws FileNotFoundException {
+        ArrayList<SkillTemplate> templates = new ArrayList<>();
+        ArrayList<String> paths = getAllSkillPaths();
+        for (int i = 0; i < paths.size(); i++) {
+            templates.add(readSkillsFromFile(paths.get(i)));
+        }
+        return templates;
     }
 
 
@@ -41,7 +45,7 @@ public class SkillParser {
 	 * It reads all the filenames in the db folder and returns them in an ArrayList
 	 * @return returns the filenames without the .txt extension
 	 */
-    public static ArrayList<String> getAllSkills() {
+    public static ArrayList<String> getAllSkillPaths() {
 
         File folder = new File("src/main/java/db/");
         File[] listOfFiles = folder.listFiles();
@@ -96,16 +100,15 @@ public class SkillParser {
         ArrayList<Action> actions = new ArrayList<Action>();
         boolean foundQuestion = false;
         while (myReader.hasNextLine()) {
-            String str = myReader.nextLine();
+            String str = myReader.nextLine().toLowerCase();
             String firstWord = str.split(" ")[0];
 
             // Parsing question
-            if (firstWord.equals("Question") && !foundQuestion) {
+            if (firstWord.equals("question") && !foundQuestion) {
                 // remove first word from str
                 str = str.substring(str.indexOf(" ") + 1);
                 question = str;
                 foundQuestion = true;
-                System.out.println("question :" + str);
 
                 // find all the words that are between <> in question and add them to keywords
 
@@ -119,7 +122,7 @@ public class SkillParser {
             }
 
             // Parsing Slots
-            if (firstWord.equals("Slot")) {
+            if (firstWord.equals("slot")) {
                 String slotName = str.split(" ")[1];
                 // remove < and > symbols from slotName
                 slotName = slotName.substring(1, slotName.length() - 1);
@@ -131,10 +134,9 @@ public class SkillParser {
             }
 
             // Parsing Actions
-            if (firstWord.equals("Action")) {
+            if (firstWord.equals("action")) {
                 Action action = new Action();
                 str = str.substring(str.indexOf(" ") + 1);
-                System.out.println("action :" + str);
                 while (str.contains("<")) {
                     String keyword = str.substring(str.indexOf("<") + 1, str.indexOf(">"));
                     // System.out.println(keyword);
@@ -158,7 +160,6 @@ public class SkillParser {
 
         SkillTemplate skill = new SkillTemplate(question, keywords, slots, actions);
         myReader.close();
-        System.out.println(skill);
         return skill;
     }
 }

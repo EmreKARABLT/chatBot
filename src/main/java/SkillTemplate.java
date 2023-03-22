@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SkillTemplate {
+    private static HashMap<String,SkillTemplate> slotesToTemplate;
     private String question;
     private ArrayList<String> keywords;
     private HashMap< String, ArrayList<String> > slots;
@@ -12,6 +13,10 @@ public class SkillTemplate {
         this.keywords = keywords;
         this.slots = slots;
         this.actions = actions;
+    }
+
+    public void addAllSlots(){
+
     }
 
     public String getQuestion() {
@@ -38,15 +43,43 @@ public class SkillTemplate {
         this.slots = slots;
     }
 
+    public Action getAction(ArrayList<String>keyword){
+        for (int i = 0; i < actions.size(); i++) {
+            Action action = actions.get(i);
+            if(action.ifMatched(createHashAction(keyword)))
+                return action;
+        }
+        return null;
+    }
+
+    public HashMap<String,String> createHashAction(ArrayList<String> question){
+        
+        HashMap<String,String> questionKeywords = new HashMap<>();
+        for (String key: keywords) {
+                ArrayList<String> values = slots.get(key);
+                for(String value : values){
+                    if(question.contains(value)){
+                        questionKeywords.put(key,value);
+                        break;
+                    }
+                }
+        }
+        
+        return questionKeywords;
+
+    }
+
     @Override
     public String toString() {
         return "SkillTemplate{" +
-                "question='" + question + '\'' +
-                "\n keywords=" + keywords +
+                "question='" + question + '\''+
+                 "\n keywords=" + keywords +
                 "\n slots=" + slots +
                 "\n actions=" + actions +
                 '}';
     }
+
+
 
 
 }

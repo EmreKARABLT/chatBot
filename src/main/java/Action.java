@@ -17,7 +17,11 @@ public class Action {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-
+    public boolean ifMatched(HashMap<String , String> question){
+        if(question.equals(slotValues))
+            return true;
+        return false;
+    }
     @Override
     public String toString() {
         return "\nAction : " +
