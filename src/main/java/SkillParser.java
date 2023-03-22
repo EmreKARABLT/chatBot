@@ -147,14 +147,19 @@ public class SkillParser {
                     // System.out.println(keyword);
 
                     str = str.substring(str.indexOf(">") + 2);
+                    // System.out.print(str);
+                    for (int i = 0; i < slots.get(keyword).size(); i++) {
+                        String slotValue = slots.get(keyword).get(i);
+                        // System.out.println("Slot value " + slotValue);
 
-
-                    String value = str.split("\\|")[0];
-                    
-                    action.slotValues.put(keyword, value);
-
-                    // remove the value keyword
-                    str = str.substring(str.indexOf(value) );
+                        if (str.startsWith(slotValue)) {
+                            System.out.println("Slot value " + slotValue);
+                            action.slotValues.put(keyword, slotValue);
+                            // // remove the value keyword
+                            str = str.substring(str.indexOf(slotValue) + slotValue.length() );
+                            break;
+                        }
+                    }
 
                 }
                 action.setAnswer(str);
