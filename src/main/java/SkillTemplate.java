@@ -20,7 +20,8 @@ public class SkillTemplate {
         this.actions = actions;
         this.pairedValues = new ArrayList<>();
         this.parsedRules = new ArrayList<>();
-
+        pairValues(this.parsedRules,0);
+        parseRule();
     }
 
     public void addAllSlots(){
