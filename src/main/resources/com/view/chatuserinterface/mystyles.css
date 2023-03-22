@@ -1,5 +1,5 @@
 .my-button{
-    -fx-background-color: #337361;
+    -fx-background-color: #303036;
     -fx-text-fill: white;
     -fx-min-width: 75px;
     -fx-min-height: 37px;
@@ -12,7 +12,7 @@
 
 }
 .my-button:hover{
-    -fx-background-color: #87eee7;
+    -fx-background-color: #53535d;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
@@ -103,7 +103,7 @@
     -fx-background-color: red;
     -fx-text-fill: white;
 
-    -fx-pref-width: 75px;
+    -fx-pref-width: 38px;
     -fx-pref-height: 38px;
 
     -fx-font-weight: bold;
@@ -135,8 +135,8 @@
     -fx-alignment: center-left;
     -fx-wrap-text: true;
     -fx-background-radius: 5px;
-    -fx-pref-width: 400px;
-    -fx-max-width: 400px;
+    -fx-pref-width: 430px;
+    -fx-max-width: 430px;
 }
 
 .title-label {

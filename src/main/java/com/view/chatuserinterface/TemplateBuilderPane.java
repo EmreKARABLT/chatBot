@@ -34,6 +34,12 @@ public class TemplateBuilderPane extends BorderPane {
 
             So im going to add a vbox to the center, then im going to add scroll pane text field scroll pane text field scroll pane text field
          */
+        HBox titlePane = new HBox();
+        titlePane.getStylesheets().add("com/view/chatuserinterface/mystyles.css");
+        titlePane.getStyleClass().add("content-title");
+        Label title = new Label("          Build Your Template");
+        title.getStyleClass().add("title-label");
+
         this.getStylesheets().add("com/view/chatuserinterface/mystyles.css");
         this.getStyleClass().add("menu-pane");
         submit = new Button("Submit");
@@ -218,8 +224,8 @@ public class TemplateBuilderPane extends BorderPane {
 
             actionsTextField.setText("");
         });
-
-        this.setTop(back);
+        titlePane.getChildren().addAll(back,title);
+        this.setTop(titlePane);
         this.setCenter(content);
         this.setBottom(submit);
     }
