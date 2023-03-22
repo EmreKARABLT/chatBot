@@ -10,7 +10,8 @@ public class Main {
         SkillTemplate template = controller.getMatchedRule(question);
         System.out.println(template);
         if(template!=null){
-            System.out.println(template.getAction(controller.getQuestionAsList(question)));
+            System.out.println(template.getAction(controller.getQuestionKeywords()));
+            System.out.println(controller.getQuestionKeywords());
         }
     }
 }

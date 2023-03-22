@@ -46,8 +46,10 @@ public class TextProcessor {
 			if((""+question.charAt(i)).equals(" ")){
 				for (int j = i+1; j < question.length(); j++) {
 					if((""+question.charAt(j)).equals(" ")){
-						split.add(question.substring(i+1,j));
-						split.add(question.substring(i+1,j).replace(" ",""));
+						if(!split.contains(question.substring(i+1,j)))
+							split.add(question.substring(i+1,j));
+						if(!split.contains(question.substring(i+1,j).replace(" ","")))
+							split.add(question.substring(i+1,j).replace(" ",""));
 					}
 				}
 			}

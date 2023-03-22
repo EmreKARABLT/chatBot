@@ -130,12 +130,12 @@ public class SkillParser {
             if (firstWord.equals("slot")) {
                 String slotName = str.split(" ")[1];
                 // remove < and > symbols from slotName
-                slotName = slotName.substring(1, slotName.length() - 1);
+                slotName = slotName.substring(1, slotName.length() - 1).replace(" ","");
                 // System.out.println("slotName :" + slotName);
 
                 String value = str.substring(str.indexOf(">") + 2);
                 // System.out.println("value :" + value);
-                slots.get(slotName).add(value);
+                slots.get(slotName).add(value.replace(" ",""));
             }
 
             // Parsing Actions
@@ -156,7 +156,7 @@ public class SkillParser {
                         String slotValue = slots.get(keyword).get(i);
                         // System.out.println("Slot value " + slotValue);
 
-                        if (str.startsWith(slotValue)) {
+                        if (str.replace(" ","").startsWith(slotValue)) {
                             System.out.println("Slot value " + slotValue);
                             action.slotValues.put(keyword, slotValue);
                             // // remove the value keyword

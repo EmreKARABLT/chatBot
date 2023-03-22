@@ -25,15 +25,17 @@ public class TemplateController {
 	public SkillTemplate getMatchedRule(String question){
 		for (SkillTemplate template : this.templates) {
 			questionKeywords = getQuestionAsList(question);
+			
+			System.out.println(questionKeywords);
 			if(questionKeywords.isEmpty()){
 				return null;
 			}
 			ArrayList<SkillTemplate> oneTemplate = new ArrayList<>();
 			oneTemplate.add(template);
-
+			System.out.println();
 			ArrayList<String> ruleKeywords = vocabulary.makeVocabulary(oneTemplate);
 
-			if(compareIfMatch(questionKeywords,ruleKeywords)){
+			if(compareIfMatch(ruleKeywords)){
 				return template;
 			}
 		}
@@ -41,17 +43,29 @@ public class TemplateController {
 
 	}
 
-	public boolean compareIfMatch(ArrayList<String> questionKeywords , ArrayList<String> ruleKeywords){
+	public boolean compareIfMatch(ArrayList<String> ruleKeywords){
 
 		boolean[] matchArray = new boolean[questionKeywords.size()];
-		// System.out.println("Keywords Question" + questionKeywords);
-		// System.out.println("Keywords Rule" + ruleKeywords);
-		// System.out.println("--------");
+		ArrayList<String> toRemove = new ArrayList<>();
 		for (int i = 0; i < questionKeywords.size(); i++) {
 			if (ruleKeywords.contains(questionKeywords.get(i))) {
 				matchArray[i] = true;
 			}
+			else if(ruleKeywords.contains(questionKeywords.get(i).replace(" ",""))){
+				matchArray[i] = true;
+			}
+			else{
+				for (int j = 0; j < ruleKeywords.size(); j++) {
+					if(ruleKeywords.get(j).contains(questionKeywords.get(i))){
+						matchArray[i] = true;
+						toRemove.add(questionKeywords.get(i));
+						break;
+					}
+				}
+			}
 		}
+		questionKeywords.removeAll(toRemove);
+		System.out.println(questionKeywords);
 		for (int i = 0; i < matchArray.length; i++) {
 			if(!matchArray[i])
 				return false;
@@ -61,5 +75,8 @@ public class TemplateController {
 	public ArrayList<String> getQuestionAsList(String question){
 		return TextProcessor.removeNoVocabulary(question, voc);
 	}
-	
+
+	public ArrayList<String> getQuestionKeywords(){
+		return questionKeywords;
+	}
 }
