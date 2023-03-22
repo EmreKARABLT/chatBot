@@ -31,8 +31,27 @@ public class TextProcessor {
 		Pattern pattern = Pattern.compile("[^A-z0-9\\s]", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(question);
 		question = matcher.replaceAll(" ").toLowerCase(Locale.ROOT);
+		question = " "+question+" ";
 		String[] q = question.split("[*\s]");
 		ArrayList<String> split = new ArrayList<>(Arrays.asList(q));
+		return split;
+	}
+	public static ArrayList<String> removePunctuationsForQuestion(String question){
+		Pattern pattern = Pattern.compile("[^A-z0-9\\s]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(question);
+		question = matcher.replaceAll(" ").toLowerCase(Locale.ROOT);
+		question = " "+question+" ";
+		ArrayList<String> split = new ArrayList<>();
+		for (int i = 0; i < question.length(); i++) {
+			if((""+question.charAt(i)).equals(" ")){
+				for (int j = i+1; j < question.length(); j++) {
+					if((""+question.charAt(j)).equals(" ")){
+						split.add(question.substring(i+1,j));
+						split.add(question.substring(i+1,j).replace(" ",""));
+					}
+				}
+			}
+		}
 		return split;
 	}
 
@@ -56,7 +75,7 @@ public class TextProcessor {
 	
 
 	public static ArrayList<String> removeNoVocabulary(String question,ArrayList<String>voc){
-		ArrayList<String> splitNP = removePunctuations(question);
+		ArrayList<String> splitNP = removePunctuationsForQuestion(question);
 		ArrayList<String> split = new ArrayList<>();
 		for (String word : splitNP) {
 			if (!word.isEmpty() && voc.contains(word)) {

@@ -25,6 +25,9 @@ public class TemplateController {
 	public SkillTemplate getMatchedRule(String question){
 		for (SkillTemplate template : this.templates) {
 			questionKeywords = getQuestionAsList(question);
+			if(questionKeywords.isEmpty()){
+				return null;
+			}
 			ArrayList<SkillTemplate> oneTemplate = new ArrayList<>();
 			oneTemplate.add(template);
 
