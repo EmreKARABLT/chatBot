@@ -83,13 +83,15 @@ public class TemplateController {
 		}
 		return allParsedTemplates;
 	}
+
 	public String didYouMean(String question){
 		ArrayList<String> allParsedTemplates = parseAllTemplatesToStrings();
 		String bestMatch = "";
 		int minDistance = 100;
+		System.out.println("ALL COMBINATIONS OF TEMPLATES                     DISTANCE                 QUESTION\n-------------------------------------------------------------------" );
 		for (String parsedRule: allParsedTemplates) {
 			int distance = LevenshteinDistance.computeLDistance(parsedRule,question);
-			System.out.println(parsedRule + "--- " +  distance +" ---" + question );
+			System.out.println(parsedRule + "  ---(distance = " +  distance +")---  " + question );
 			if(distance<minDistance){
 				bestMatch = parsedRule;
 				minDistance = distance;
@@ -97,7 +99,7 @@ public class TemplateController {
 		}
 		if(minDistance > 0 && minDistance < 10){
 			Scanner scan  = new Scanner(System.in);
-			System.out.println("did you mean ?(Y/N)\n" + bestMatch );
+			System.out.println("\nDid you mean ?(Y/N) : -> " + bestMatch );
 			String answer = scan.nextLine();
 			if(answer.equalsIgnoreCase("yes" ) ||answer.equalsIgnoreCase("y")){
 				return bestMatch;
