@@ -147,7 +147,11 @@ public class SkillParser {
                     // System.out.println(keyword);
 
                     str = str.substring(str.indexOf(">") + 2);
-                    // System.out.print(str);
+                    
+                    if(slots.get(keyword) == null) {
+                        System.out.println("Error in file " + filename + " slot " + keyword + " is not defined");
+                        System.exit(0);
+                    }
                     for (int i = 0; i < slots.get(keyword).size(); i++) {
                         String slotValue = slots.get(keyword).get(i);
                         // System.out.println("Slot value " + slotValue);
