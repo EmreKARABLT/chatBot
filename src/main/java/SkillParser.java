@@ -3,12 +3,17 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 import java.io.FileWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class SkillParser {
 
+
+    public static void main(String[] args) throws FileNotFoundException  {
+        System.out.println(readSkillsFromFile("skill"));
+    }
     public static ArrayList<SkillTemplate> getAllSkills() throws FileNotFoundException {
         ArrayList<SkillTemplate> templates = new ArrayList<>();
         ArrayList<String> paths = getAllSkillPaths();
@@ -142,12 +147,14 @@ public class SkillParser {
                     // System.out.println(keyword);
 
                     str = str.substring(str.indexOf(">") + 2);
-                    String value = str.split(" ")[0];
-                    // System.out.println(value);
+
+
+                    String value = str.split("\\|")[0];
+                    
                     action.slotValues.put(keyword, value);
 
                     // remove the value keyword
-                    str = str.substring(str.indexOf(" ") + 1);
+                    str = str.substring(str.indexOf(value) );
 
                 }
                 action.setAnswer(str);
