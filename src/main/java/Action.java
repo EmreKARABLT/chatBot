@@ -10,9 +10,7 @@ public class Action {
         this.answer = answer;
     }
 
-    public Action() {
-
-    }
+    public Action() {}
 
     public void setAnswer(String answer) {
         this.answer = answer;

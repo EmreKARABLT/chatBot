@@ -157,7 +157,7 @@ public class SkillParser {
                         // System.out.println("Slot value " + slotValue);
 
                         if (str.replace(" ","").startsWith(slotValue)) {
-                            System.out.println("Slot value " + slotValue);
+//                            System.out.println("Slot value " + slotValue);
                             action.slotValues.put(keyword, slotValue);
                             // // remove the value keyword
                             str = str.substring(str.indexOf(slotValue) + slotValue.length() );

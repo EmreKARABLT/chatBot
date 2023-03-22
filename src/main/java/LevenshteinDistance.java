@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LevenshteinDistance {
@@ -28,7 +29,6 @@ public class LevenshteinDistance {
                 }
             }
         }
-
         return store[str1.length()][str2.length()];
     }
 

@@ -80,13 +80,13 @@ public class TextProcessor {
 		ArrayList<String> splitNP = removePunctuationsForQuestion(question);
 		ArrayList<String> split = new ArrayList<>();
 		for (String word : splitNP) {
-			if (!word.isEmpty() && voc.contains(word)) {
+			if (!word.isEmpty() && voc.contains(word) ) {
 				split.add(word);
 			}
 		}
-
 		return split;
 	}
+
 
 	public static ArrayList<String> csv(String filename){
 		ArrayList<String> records = new ArrayList<>();

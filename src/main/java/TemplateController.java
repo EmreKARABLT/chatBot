@@ -7,16 +7,12 @@ public class TemplateController {
 	Vocabulary vocabulary;
 	ArrayList<String> questionKeywords;
 
-
 	public TemplateController() throws FileNotFoundException{
 		templates = SkillParser.getAllSkills();
 		vocabulary = new Vocabulary();
         voc = vocabulary.makeVocabulary(templates);
-        System.out.println(voc.toString());
+
 	}
-
-
-
 	/**
 	 * This method iterates over all the rules and check if the given question matches with any rule's template
 	 * @param question given question
@@ -25,8 +21,7 @@ public class TemplateController {
 	public SkillTemplate getMatchedRule(String question){
 		for (SkillTemplate template : this.templates) {
 			questionKeywords = getQuestionAsList(question);
-			
-			System.out.println(questionKeywords);
+
 			if(questionKeywords.isEmpty()){
 				return null;
 			}
@@ -36,6 +31,7 @@ public class TemplateController {
 			ArrayList<String> ruleKeywords = vocabulary.makeVocabulary(oneTemplate);
 
 			if(compareIfMatch(ruleKeywords)){
+
 				return template;
 			}
 		}
@@ -79,4 +75,35 @@ public class TemplateController {
 	public ArrayList<String> getQuestionKeywords(){
 		return questionKeywords;
 	}
+	public ArrayList<String> parseAllTemplatesToStrings(){
+		ArrayList<String> allParsedTemplates = new ArrayList<>();
+		for (SkillTemplate template: templates) {
+
+			allParsedTemplates.addAll(template.getParsedRules());
+		}
+		return allParsedTemplates;
+	}
+	public String didYouMean(String question){
+		ArrayList<String> allParsedTemplates = parseAllTemplatesToStrings();
+		String bestMatch = "";
+		int minDistance = 100;
+		for (String parsedRule: allParsedTemplates) {
+			int distance = LevenshteinDistance.computeLDistance(parsedRule,question);
+			System.out.println(parsedRule + "--- " +  distance +" ---" + question );
+			if(distance<minDistance){
+				bestMatch = parsedRule;
+				minDistance = distance;
+			}
+		}
+		if(minDistance > 0 && minDistance < 10){
+			Scanner scan  = new Scanner(System.in);
+			System.out.println("did you mean ?(Y/N)\n" + bestMatch );
+			String answer = scan.nextLine();
+			if(answer.equalsIgnoreCase("yes" ) ||answer.equalsIgnoreCase("y")){
+				return bestMatch;
+			}
+		}
+		return question;
+	}
+
 }
