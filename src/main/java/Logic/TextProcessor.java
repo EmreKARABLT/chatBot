@@ -1,3 +1,5 @@
+package Logic;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,7 +16,7 @@ public class TextProcessor {
 	private static ArrayList<String> qp= new ArrayList<String>(List.of(questionPronouns));
 //	private static ArrayList<String> verbs = csv("src/main/java/verbs.csv");
 	private static ArrayList<String> verbs = new ArrayList<>();
-	private static ArrayList<String> stopWords = csv("src/main/java/stopwords.csv");
+	private static ArrayList<String> stopWords = csv("src/main/java/Logic/stopwords.csv");
 
 
 	public static Boolean isQuestion(String question) {
