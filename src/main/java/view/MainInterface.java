@@ -14,6 +14,7 @@ public class MainInterface extends Application {
     Stage stage;
 
     TemplateBuilderPane templateBuilderPane;
+    TemplateSelectorPane templateSelectorPane;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -24,7 +25,7 @@ public class MainInterface extends Application {
         MenuPane menuPane = new MenuPane(this);
         menu = new Scene(menuPane,WIDTH,HEIGHT);
 
-        TemplateSelectorPane templateSelectorPane = new TemplateSelectorPane(this);
+        templateSelectorPane = new TemplateSelectorPane(this);
         templateSelector = new Scene(templateSelectorPane,WIDTH,HEIGHT);
 
         templateBuilderPane = new TemplateBuilderPane(this);

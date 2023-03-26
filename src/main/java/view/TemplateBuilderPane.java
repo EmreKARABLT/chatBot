@@ -307,6 +307,7 @@ public class TemplateBuilderPane extends BorderPane {
         back.getStyleClass().add("my-button");
         back.setOnAction(e ->{
             this.clearContent();
+            mainInterface.templateSelectorPane.refresh();
             mainInterface.switchScene(mainInterface.templateSelector);
         });
         content.getChildren().addAll(questionsScroll,slotsScroll,actionsScroll);
@@ -359,13 +360,25 @@ public class TemplateBuilderPane extends BorderPane {
             else{
                 String write = "";
                 for (String q : this.questions) {
-                    write += "Question "+q+"\n";
+                    if (!q.contains("Question")) {
+                        write += "Question "+q+"\n";
+                    } else {
+                        write += q+"\n";
+                    }
                 }
                 for (String s : this.slots) {
-                    write += "Slot "+s+"\n";
+                    if(!s.contains("Slot")){
+                        write += "Slot "+s+"\n";
+                    }else{
+                        write += s+"\n";
+                    }
                 }
                 for (String a : this.actions) {
-                    write += "Action "+ a+"\n";
+                    if(!a.contains("Action")){
+                        write += "Action "+ a+"\n";
+                    }else{
+                        write +=  a+"\n";
+                    }
                 }
                 SkillParser.writeToFile(enterFileName.getText(), write);
                 enterFileName.setText("");
@@ -564,7 +577,7 @@ public class TemplateBuilderPane extends BorderPane {
             editbutton.getStyleClass().add("edit-button");
 
             editbutton.setOnAction(event ->{
-                actionsContent.getChildren().remove(stuffies);
+                actionsContent.getChildren().remove(stuff);
                 this.actions.remove(lbl.getText());
                 inputAction.getChildren().remove(addSlot);
                 actionsTextField.setText(lbl.getText());

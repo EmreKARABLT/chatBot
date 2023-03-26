@@ -25,6 +25,7 @@ public class MenuPane extends FlowPane {
         templateBtn = new Button("Template Selector");
         templateBtn.getStyleClass().add("my-button");
         templateBtn.setOnAction(e ->{
+            mainInterface.templateSelectorPane.refresh();
             mainInterface.switchScene(mainInterface.templateSelector);
         });
 

@@ -20,8 +20,11 @@ public class TemplateSelectorPane extends BorderPane {
     VBox content;
     Button back,select;
     HBox bottom;
+    MainInterface mainInterface;
 
     public TemplateSelectorPane(MainInterface mainInterface){
+        this.mainInterface = mainInterface;
+
         this.getStylesheets().add("file:src/main/resources/view/mystyles.css");
         this.getStyleClass().add("menu-pane");
         ArrayList<String> skills = SkillParser.getAllSkillPaths();
@@ -111,6 +114,73 @@ public class TemplateSelectorPane extends BorderPane {
         this.setTop(titlePane);
         this.setCenter(templates);
         this.setBottom(bottom);
+
+    }
+    public void refresh(){
+        ArrayList<String> skills = SkillParser.getAllSkillPaths();
+
+
+        content = new VBox();
+        content.getStylesheets().add("file:src/main/resources/view/mystyles.css");
+        content.getStyleClass().add("content");
+        content.setAlignment(Pos.TOP_CENTER);
+        for (int i = 0; i < skills.size(); i++) {
+            Button label = new Button(skills.get(i));
+            label.getStyleClass().add("label-select");
+
+            label.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    // Execute code for double-click event here
+                    SkillTemplate skillData ;
+                    try {
+                         skillData = SkillParser.readSkillsFromFile(label.getText());
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                    mainInterface.templateBuilderPane.addContent(skillData, label.getText());
+                    mainInterface.switchScene(mainInterface.templateBuilder);
+
+                }
+            });
+
+            Button delete = new Button("X");
+            delete.getStyleClass().add("delete-button");
+            delete.setOnAction(e ->{
+
+            });
+
+            Button edit = new Button("Edit");
+            edit.getStyleClass().add("edit-button");
+            edit.setOnAction(event -> {
+                SkillTemplate skillData ;
+                try {
+                    skillData = SkillParser.readSkillsFromFile(label.getText());
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                mainInterface.templateBuilderPane.addContent(skillData, label.getText());
+                mainInterface.switchScene(mainInterface.templateBuilder);
+
+            });
+
+     
+
+
+
+            HBox stuffies = new HBox();
+            stuffies.getStylesheets().add("file:src/main/resources/view/mystyles.css");
+            stuffies.getStyleClass().add("content");
+            stuffies.getChildren().addAll(label,edit,delete);
+
+            content.getChildren().add(stuffies);
+            
+            
+        }
+        
+        templates = new ScrollPane(content);
+        templates.getStylesheets().add("file:src/main/resources/view/mystyles.css");
+        templates.getStyleClass().add("scroll-pane");
+        this.setCenter(templates);
 
     }
 }
