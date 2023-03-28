@@ -84,6 +84,15 @@ public class TextProcessor {
 		for (String word : splitNP) {
 			if (!word.isEmpty() && voc.contains(word) ) {
 				split.add(word);
+				continue;
+			}
+			else{
+				for (int i = 0; i < voc.size(); i++) {
+					if(LevenshteinDistance.computeLDistance(word, voc.get(i))<2){
+						split.add(voc.get(i));
+						break;
+					}
+				}
 			}
 		}
 		return split;
