@@ -64,17 +64,28 @@ public class SkillTemplate {
     }
 
     public HashMap<String,String> createHashAction(ArrayList<String> question){
-        
+
         HashMap<String,String> questionKeywords = new HashMap<>();
-        for (String key: keywords) {
-                ArrayList<String> values = slots.get(key);
-                for(String value : values){
-                    if(question.contains(value)){
-                        questionKeywords.put(key,value);
-                        break;
+//        for (String key: keywords) {
+//                ArrayList<String> values = slots.get(key);
+//                for(String value : values){
+//                    if(question.contains(value)){
+//                        questionKeywords.put(key,value);
+//                        break;
+//                    }
+//                }
+//        }
+        for (String word : question) {
+            for(String key : keywords){
+                for(String value : slots.get(key)){
+                    if(word.equals(value)){
+                    questionKeywords.put(key,word);
+                    break;
                     }
                 }
+            }
         }
+        System.out.println("QUESTION HASH " + questionKeywords);
         
         return questionKeywords;
 

@@ -29,9 +29,8 @@ public class TemplateController {
 			}
 			ArrayList<SkillTemplate> oneTemplate = new ArrayList<>();
 			oneTemplate.add(template);
-			System.out.println();
 			ArrayList<String> ruleKeywords = vocabulary.makeVocabulary(oneTemplate);
-
+			System.out.println("RULE KEYWORDS " + ruleKeywords);
 			if(compareIfMatch(ruleKeywords)){
 
 				return template;
@@ -63,7 +62,6 @@ public class TemplateController {
 			}
 		}
 		questionKeywords.removeAll(toRemove);
-		System.out.println(questionKeywords);
 		for (int i = 0; i < matchArray.length; i++) {
 			if(!matchArray[i])
 				return false;

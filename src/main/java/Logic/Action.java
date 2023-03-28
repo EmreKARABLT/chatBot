@@ -18,6 +18,7 @@ public class Action {
         this.answer = answer;
     }
     public boolean ifMatched(HashMap<String , String> question){
+        System.out.println(question + " -- " + slotValues);
         if(question.equals(slotValues))
             return true;
         return false;

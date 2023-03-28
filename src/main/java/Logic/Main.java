@@ -9,13 +9,11 @@ public class Main {
         TemplateController controller = new TemplateController();
         Scanner scan  = new Scanner(System.in);
         System.out.println("What is your question?");
-        String question = scan.nextLine();
-        question = controller.didYouMean(question);
+        String question = "which lectures are there on monday at 11";
+
         SkillTemplate template = controller.getMatchedRule(question);
-        System.out.println(template);
-        if(template!=null) {
-            System.out.println(template.getAction(controller.getQuestionKeywords()));
-            System.out.println(controller.getQuestionKeywords());
-        }
+        System.out.println("template KW " + template.getKeywords());
+
+        System.out.println(template.getAction(controller.getQuestionKeywords()));
     }
 }
