@@ -15,11 +15,12 @@ public class MainInterface extends Application {
 
     TemplateBuilderPane templateBuilderPane;
     TemplateSelectorPane templateSelectorPane;
+    AssistantPane assistantPane;
 
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
-        AssistantPane assistantPane = new AssistantPane(this);
+        assistantPane = new AssistantPane(this);
         assistant = new Scene(assistantPane,WIDTH,HEIGHT);
 
         MenuPane menuPane = new MenuPane(this);

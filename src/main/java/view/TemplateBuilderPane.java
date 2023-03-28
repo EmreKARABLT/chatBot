@@ -579,7 +579,7 @@ public class TemplateBuilderPane extends BorderPane {
             editbutton.setOnAction(event ->{
                 actionsContent.getChildren().remove(stuff);
                 this.actions.remove(lbl.getText());
-                inputAction.getChildren().remove(addSlot);
+                inputAction.getChildren().remove(addAction);
                 actionsTextField.setText(lbl.getText());
                 inputAction.getChildren().add(actionsTextField);
                 actionsTextField.requestFocus();
@@ -594,9 +594,9 @@ public class TemplateBuilderPane extends BorderPane {
 
             actionsContent.getChildren().add(stuff);
 
+            actionsContent.getChildren().remove(inputAction);
+            actionsContent.getChildren().add(inputAction);
         }
-        actionsContent.getChildren().remove(inputAction);
-        actionsContent.getChildren().add(inputAction);
 
         // Action read end
 

@@ -143,9 +143,14 @@ public class TemplateSelectorPane extends BorderPane {
                 }
             });
 
+            
+            HBox stuffies = new HBox();
+
             Button delete = new Button("X");
             delete.getStyleClass().add("delete-button");
             delete.setOnAction(e ->{
+                SkillParser.deleteFile(label.getText());
+                content.getChildren().remove(stuffies);
 
             });
 
@@ -166,8 +171,6 @@ public class TemplateSelectorPane extends BorderPane {
      
 
 
-
-            HBox stuffies = new HBox();
             stuffies.getStylesheets().add("file:src/main/resources/view/mystyles.css");
             stuffies.getStyleClass().add("content");
             stuffies.getChildren().addAll(label,edit,delete);
