@@ -63,6 +63,7 @@ public class AssistantPane extends BorderPane {
                 textField.getStyleClass().add("text-field");
             }
         });
+
         textField.setOnAction(e ->{
             Label newLabel = new Label(textField.getText());
             newLabel.getStyleClass().add("label");
@@ -74,11 +75,20 @@ public class AssistantPane extends BorderPane {
             }
             SkillTemplate template= assistant.getMatchedRule(textField.getText());
             String output;
-            if(template!= null){
-                output = template.getAction(assistant.getQuestionAsList(textField.getText())).answer;
+            try {
+                if(template!= null){
+                    if(template.getAction(assistant.getQuestionAsList(textField.getText())).answer != null||assistant.getQuestionAsList(textField.getText()) != null){
+    
+                        output = template.getAction(assistant.getQuestionAsList(textField.getText())).answer;
+                    }else{
+                        output = "Sorry I am unable to find an answer for that";
+                    }                
+                }else{
+                    output = "Sorry I am unable to find an answer for that";
+                }
                 
-            }else{
-                output = "I don't know";
+            } catch (Exception ex) {
+                output = "Sorry I am unable to find an answer for that";
             }
 
             Label outputLabel = new Label(output);
