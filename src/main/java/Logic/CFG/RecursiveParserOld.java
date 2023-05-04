@@ -9,22 +9,17 @@ import java.util.regex.Pattern;
 
 import static Logic.CFG.Response.actionsList;
 
-public class RecursiveParser {
-
-    public String filename;
+public class RecursiveParserOld {
+    private static Map<String, List<String>> grammar;
 
     /**
      *
-     * @param input       This is the input string given by the user
-     * @param startSymbol Represents the start symbol of the grammar for the
-     *                    recursive search which in our case the start symbol is
-     *                    "<S>"
-     * @param grammar    The grammar to be used for the recursive search
-     * @return A boolean value, where true represents the input being part of the
-     *         grammar, otherwise it isn't
+     * @param input This is the input string given by the user
+     * @param startSymbol Represents the start symbol of the grammar for the recursive search which in our case the start symbol is "<S>"
+     * @return A boolean value, where true represents the input being part of the grammar, otherwise it isn't
      */
-    public boolean hasMatch(List<String> input, String startSymbol, Map<String, List<String>> grammar) {
-        // System.out.println("\nInput: " + input);
+    public static boolean parse(List<String> input, String startSymbol) {
+//        System.out.println("\nInput: " + input);
         List<String> rules = grammar.get(startSymbol);
 
         if (rules == null) {
@@ -37,7 +32,7 @@ public class RecursiveParser {
 
             for (int i = 0; i < tokens.size(); i++) {
                 if (grammar.containsKey(tokens.get(i))) {
-                    if (i >= input.size() || !hasMatch(input.subList(i, input.size()), tokens.get(i), grammar)) {
+                    if (i >= input.size() || !parse(input.subList(i, input.size()), tokens.get(i))) {
                         match = false;
                         break;
                     }
@@ -59,17 +54,15 @@ public class RecursiveParser {
 
     /**
      *
-     * @return Hashmap where the rules of the grammar text file are stored, where
-     *         the keys are the non-terminals which are represented by "<>" and the
-     *         values are the
-     *         strings/words not contained in the "<>" brackets
+     * @return Hashmap where the rules of the grammar text file are stored, where the keys are the non-terminals which are represented by "<>" and the values are the
+     * strings/words not contained in the "<>" brackets
      * @throws IOException
      */
-    private Map<String, List<String>> parseGrammarFromFile() throws IOException {
+    private static Map<String, List<String>> convertRulesToHashMap() throws IOException {
         Map<String, List<String>> grammar = new HashMap<>();
         Pattern pattern = Pattern.compile("^Rule (<[A-Z]*>) (.*)$");
 
-        Scanner scanner = new Scanner(new File("src/main/java/Logic/CFG/" + filename + ".txt"));
+        Scanner scanner = new Scanner(new File("src/main/java/Logic/CFG/grammar.txt"));
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             Matcher matcher = pattern.matcher(line);
@@ -89,16 +82,16 @@ public class RecursiveParser {
 
     }
 
-     /**
+    /**
      *
      * @return A list, where it stores the conditions and according responses for the action in the grammar text file
      * The conditions stores the string before the "|" symbol and the response stores the string after the "|" symbol
      * @throws FileNotFoundException
      */
-    public List<Response> parseActionsFromFile() throws FileNotFoundException {
+    public static List<Response> actionsGrammarToList() throws FileNotFoundException {
         Pattern pattern = Pattern.compile("^Action (.*)$");
 
-        Scanner scanner = new Scanner(new File("src/main/java/Logic/CFG/" + filename + ".txt"));
+        Scanner scanner = new Scanner(new File("src/main/java/Logic/CFG/grammar.txt"));
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             Matcher matcher = pattern.matcher(line);
@@ -119,8 +112,8 @@ public class RecursiveParser {
      * @return A response to the provided user input
      * @throws FileNotFoundException
      */
-    public String matchInputWithAction(List<String> input) throws FileNotFoundException {
-        List<Response> actionsList = parseActionsFromFile();
+    public static String matchInputWithAction(List<String> input) throws FileNotFoundException {
+        actionsList = actionsGrammarToList();
         int match = 0;
         int highestMatch = 0;
         int highestMatchIndex = -1;
@@ -148,28 +141,17 @@ public class RecursiveParser {
      * @return This combines the parser for rules and actions to make the CFG and gives the response
      * @throws IOException
      */
-    public String respond(String input) throws IOException {
-        Map<String, List<String>> grammar = parseGrammarFromFile();
-        boolean match = hasMatch(Arrays.stream(input.split("\\s+")).toList(), "<S>", grammar);
+    public static String ContextFreeGrammar(String input) throws IOException {
+        grammar = convertRulesToHashMap();
+        boolean match = parse(Arrays.stream(input.split("\\s+")).toList(), "<S>");
         if(match){
             return matchInputWithAction(Arrays.stream(input.split("\\s+")).toList());
         }
         return "I have no Idea";
     }
 
-    public RecursiveParser(String filename) {
-        this.filename = filename;
 
-    }   
-
-    public static void main(String[] args) {
-        RecursiveParser parser = new RecursiveParser("grammar");
-        try {
-            System.out.println(parser.respond("Where is DeepSpace"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws IOException {
+        System.out.println(ContextFreeGrammar("Where is DeepSpace"));
     }
-
-
 }
