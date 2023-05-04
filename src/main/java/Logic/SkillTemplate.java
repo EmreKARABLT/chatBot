@@ -136,8 +136,4 @@ public class SkillTemplate {
 //                "\n actions=" + actions +
                 '}';
     }
-
-
-
-
 }

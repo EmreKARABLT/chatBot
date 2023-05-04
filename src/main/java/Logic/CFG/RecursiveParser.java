@@ -46,13 +46,10 @@ public class RecursiveParser {
                 }
 
             }
-
             if (match) {
                 return true;
             }
-
         }
-
         return false;
     }
 

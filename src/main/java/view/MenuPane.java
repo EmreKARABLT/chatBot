@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class MenuPane extends FlowPane {
 
 
-     Button assistantBtn,templateBtn,templateBuildBtn;
+     Button assistantBtn,templateBtn,templateBuildBtn,cfgAssistantBtn,cfgEditorBtn;
 
     public MenuPane(MainInterface mainInterface){
 
@@ -35,9 +35,23 @@ public class MenuPane extends FlowPane {
             mainInterface.switchScene(mainInterface.templateBuilder);
         });
 
+        cfgAssistantBtn = new Button("CFG Assistant");
+        cfgAssistantBtn.getStyleClass().add("my-button");
+        cfgAssistantBtn.setOnAction(e ->{
+            mainInterface.switchScene(mainInterface.cfgAssistant);
+        });
+
+        cfgEditorBtn = new Button("CFG Editor");
+        cfgEditorBtn.getStyleClass().add("my-button");
+        cfgEditorBtn.setOnAction(e ->{
+            //mainInterface.cfgEditorPane.clearContent();
+            mainInterface.cfgEditorPane.addContent();
+            mainInterface.switchScene(mainInterface.cfgEditor);
+        });
+
         this.getStyleClass().add("menu-pane");
         this.setAlignment(javafx.geometry.Pos.CENTER);
-        this.getChildren().addAll(title,assistantBtn,templateBtn,templateBuildBtn);
+        this.getChildren().addAll(title,assistantBtn,templateBtn,templateBuildBtn,cfgAssistantBtn,cfgEditorBtn);
     }
 
 }

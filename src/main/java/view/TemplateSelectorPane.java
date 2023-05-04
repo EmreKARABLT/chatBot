@@ -168,16 +168,12 @@ public class TemplateSelectorPane extends BorderPane {
 
             });
 
-     
-
-
             stuffies.getStylesheets().add("file:src/main/resources/view/mystyles.css");
             stuffies.getStyleClass().add("content");
             stuffies.getChildren().addAll(label,edit,delete);
 
             content.getChildren().add(stuffies);
-            
-            
+
         }
         
         templates = new ScrollPane(content);
