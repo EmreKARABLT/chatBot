@@ -11,7 +11,7 @@ import static Logic.CFG.Response.actionsList;
 
 public class RecursiveParser {
 
-    public String filename;
+    public static String filename;
 
     /**
      *
@@ -23,7 +23,7 @@ public class RecursiveParser {
      * @return A boolean value, where true represents the input being part of the
      *         grammar, otherwise it isn't
      */
-    public boolean hasMatch(List<String> input, String startSymbol, Map<String, List<String>> grammar) {
+    public static boolean hasMatch(List<String> input, String startSymbol, Map<String, List<String>> grammar) {
         // System.out.println("\nInput: " + input);
         List<String> rules = grammar.get(startSymbol);
 
@@ -65,7 +65,7 @@ public class RecursiveParser {
      *         strings/words not contained in the "<>" brackets
      * @throws IOException
      */
-    private Map<String, List<String>> parseGrammarFromFile() throws IOException {
+    private static Map<String, List<String>> parseGrammarFromFile() throws IOException {
         Map<String, List<String>> grammar = new HashMap<>();
         Pattern pattern = Pattern.compile("^Rule (<[A-Z]*>) (.*)$");
 
@@ -95,7 +95,7 @@ public class RecursiveParser {
      * The conditions stores the string before the "|" symbol and the response stores the string after the "|" symbol
      * @throws FileNotFoundException
      */
-    public List<Response> parseActionsFromFile() throws FileNotFoundException {
+    public static List<Response> parseActionsFromFile() throws FileNotFoundException {
         Pattern pattern = Pattern.compile("^Action (.*)$");
 
         Scanner scanner = new Scanner(new File("src/main/java/Logic/CFG/" + filename + ".txt"));
@@ -119,7 +119,7 @@ public class RecursiveParser {
      * @return A response to the provided user input
      * @throws FileNotFoundException
      */
-    public String matchInputWithAction(List<String> input) throws FileNotFoundException {
+    public static String matchInputWithAction(List<String> input) throws FileNotFoundException {
         List<Response> actionsList = parseActionsFromFile();
         int match = 0;
         int highestMatch = 0;
@@ -148,7 +148,7 @@ public class RecursiveParser {
      * @return This combines the parser for rules and actions to make the CFG and gives the response
      * @throws IOException
      */
-    public String respond(String input) throws IOException {
+    public static String respond(String input) throws IOException {
         Map<String, List<String>> grammar = parseGrammarFromFile();
         boolean match = hasMatch(Arrays.stream(input.split("\\s+")).toList(), "<S>", grammar);
         if(match){
