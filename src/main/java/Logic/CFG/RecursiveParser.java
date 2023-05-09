@@ -23,25 +23,33 @@ public class RecursiveParser {
      * @return A boolean value, where true represents the input being part of the
      *         grammar, otherwise it isn't
      */
-    public static boolean hasMatch(List<String> input, String startSymbol, Map<String, List<String>> grammar) {
-        // System.out.println("\nInput: " + input);
+    public static int hasMatch(List<String> input, String startSymbol, Map<String, List<String>> grammar) {
+//        System.out.println("\nInput: " + input);
         List<String> rules = grammar.get(startSymbol);
 
         if (rules == null) {
-            return false;
+            return 0;
         }
 
         for (String rule : rules) {
             List<String> tokens = Arrays.stream(rule.split("\\s+")).toList();
             boolean match = true;
 
-            for (int i = 0; i < tokens.size(); i++) {
+            int i = 0;
+            for (i = 0; i < tokens.size(); i++) {
                 if (grammar.containsKey(tokens.get(i))) {
-                    if (i >= input.size() || !hasMatch(input.subList(i, input.size()), tokens.get(i), grammar)) {
+                    System.out.println(input.subList(i, input.size()));
+                    int matchCount = hasMatch(input.subList(i, input.size()), tokens.get(i), grammar);
+                    if (i >= input.size() || matchCount == 0) {
+
                         match = false;
                         break;
+                    }else{
+                        i += matchCount-1;
                     }
                 } else if (i >= input.size() || !(tokens.get(i).equals(input.get(i)))) {
+                    System.out.println(tokens.get(i));
+                    System.out.println(input.get(i));
                     match = false;
                     break;
                 }
@@ -49,12 +57,12 @@ public class RecursiveParser {
             }
 
             if (match) {
-                return true;
+                return i;
             }
 
         }
 
-        return false;
+        return 0;
     }
 
     /**
@@ -67,7 +75,7 @@ public class RecursiveParser {
      */
     private static Map<String, List<String>> parseGrammarFromFile() throws IOException {
         Map<String, List<String>> grammar = new HashMap<>();
-        Pattern pattern = Pattern.compile("^Rule (<[A-Z]*>) (.*)$");
+        Pattern pattern = Pattern.compile("^Rule (<[a-zA-Z]*>) (.*)$");
 
         Scanner scanner = new Scanner(new File("src/main/java/Logic/CFG/" + filename + ".txt"));
         while (scanner.hasNextLine()) {
@@ -103,10 +111,11 @@ public class RecursiveParser {
             String line = scanner.nextLine();
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()) {
-                String[] parts = matcher.group(1).split("\\|");
+                String[] parts = matcher.group(1).split("->");
                 Response action = new Response();
                 action.condition = parts.length >= 2 ? parts[0].trim() : "I have no idea.";
                 action.response = parts.length >= 2 ? parts[1].trim() : "I have no idea.";
+
                 actionsList.add(action);
             }
         }
@@ -150,7 +159,14 @@ public class RecursiveParser {
      */
     public static String respond(String input) throws IOException {
         Map<String, List<String>> grammar = parseGrammarFromFile();
-        boolean match = hasMatch(Arrays.stream(input.split("\\s+")).toList(), "<S>", grammar);
+        System.out.println(grammar);
+        System.out.println(grammar);
+        boolean match = hasMatch(Arrays.stream(input.split("\\s+")).toList(), "<S>", grammar) != 0;
+        System.out.println(match);
+//        List<Response> actionList = parseActionsFromFile();
+//        for (Response action: actionList) {
+//            System.out.println(action.response);
+//        }
         if(match){
             return matchInputWithAction(Arrays.stream(input.split("\\s+")).toList());
         }
@@ -162,10 +178,10 @@ public class RecursiveParser {
 
     }   
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         RecursiveParser parser = new RecursiveParser("grammar");
         try {
-            System.out.println(parser.respond("Where is DeepSpace"));
+            System.out.println(parser.respond("How is the weather in Berlin Bazooka tomorrow"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,15 +1,13 @@
-Rule <S> <ACTION>
-Rule <ACTION> <LOCATION> | <SCHEDULE>
-Rule <SCHEDULE> Which lectures are there <TIMEEXPRESSION> | <TIMEEXPRESSION> which lectures are there
-Rule <TIMEEXPRESSION> on <DAY> at <TIME> | at <TIME> on <DAY>
-Rule <TIME> 9 | 12
-Rule <LOCATION> Where is <ROOM> | How do <PRO> get to <ROOM> | Where is <ROOM> located
-Rule <PRO> I | you | he | she
-Rule <ROOM> DeepSpace | SpaceBox
-Rule <DAY> Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
-Action <SCHEDULE> * <DAY> Saturday | There are no lectures on Saturday
-Action <SCHEDULE> * <DAY> Monday <TIME> 9 | We start the week with math
-Action <SCHEDULE> * <DAY> Monday <TIME> 12 | On Monday noon we have Theoretical Computer
-Action <LOCATION> * <ROOM> DeepSpace | DeepSpace is in the first room after the entrance
-Action <LOCATION> * <ROOM> SpaceBox | SpaceBox is in the first floor
+Rule <S> <action>
+Rule <action> <weather>
+Rule <weather> How is the weather <location> | <pro> <verb> in <location>. What is the weather?
+Rule <location> in <city> <time>
+Rule <city> New York | Berlin Bazooka
+Rule <time> tomorrow | today
+Rule <pro> I | she | he| my mother
+Rule <verb> am | is
+Action <weather> * <city> New York <time> tomorrow -> It will be sunny.
+Action <weather> * <city> Berlin -> It is rainy.
+Action <weather> * <pro>  my mother <verb> is  <city> New York <time> today -> It is stormy today.
 Action I have no idea
+
