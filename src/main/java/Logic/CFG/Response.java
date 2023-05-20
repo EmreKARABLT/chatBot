@@ -1,16 +1,16 @@
 package Logic.CFG;
-
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Response {
-    String condition;
+    Map<String, String> condition;
     String response;
 
-    static List<Response> actionsList = new ArrayList<>();
+    public Response(){
+        condition = new HashMap<>();
+    }
 
-    public String getCondition(){
+    public Map<String, String> getCondition(){
         return condition;
     }
     public String getResponse(){

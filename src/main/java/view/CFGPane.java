@@ -1,7 +1,6 @@
 package view;
 
 import Logic.CFG.RecursiveParser;
-import Logic.CFG.RecursiveParserOld;
 import Logic.SkillTemplate;
 import Logic.TemplateController;
 import javafx.geometry.Pos;
@@ -73,8 +72,8 @@ public class CFGPane extends BorderPane {
             String output;
 
             try {
-                RecursiveParser parser = new RecursiveParser("grammar");
-                output = parser.respond(textField.getText());
+                RecursiveParser parser = new RecursiveParser();
+                output = parser.respond(textField.getText(), "src/main/java/Logic/CFG/grammar.txt");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
