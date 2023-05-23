@@ -137,26 +137,33 @@ public class RecursiveParser {
     Map<String, List<String>> grammar)
             throws IOException {
         List<Response> actionsList = parseActionsFromFile(filename);
-        boolean match = false;
+        int match = 0;
+        int valueCounter = 0;
+        int highestValueCounter = 0;
+        int highestMatch = -1;
+        String response = "";
 
         for (int i = 0; i < actionsList.size(); i++) {
             for (Map.Entry<String, String> entry : actionsList.get(i).getCondition().entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 if (rulesHashmap.containsKey(key) && rulesHashmap.get(key).equals(value) || rulesHashmap.containsKey(key) && value.equals("*")) {
-                    match = true;
-                }else{
-                    match = false;
-                    break;
+                    match++;
+                }
+                if(value != null){
+                    valueCounter++;
                 }
             }
-            if (match) {
-                return actionsList.get(i).getResponse();
+            if (match > highestMatch) {
+                highestMatch = match;
+                highestValueCounter = valueCounter;
+                response = actionsList.get(i).getResponse();
             }
+            match = 0;
+            valueCounter = 0;
 
         }
-
-        return "I have no idea.";
+        return highestMatch == highestValueCounter ? response : "I have no idea.";
     }
 
     /**
