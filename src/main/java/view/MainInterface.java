@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class MainInterface extends Application {
 
-    Scene menu,assistant,templateSelector,templateBuilder,cfgAssistant,cfgEditor;
+    Scene menu,assistant,templateSelector,templateBuilder,cfgAssistant,cfgEditor,imageDetection;
     final int HEIGHT = 800;
     final int WIDTH = 600;
     Stage stage;
@@ -18,6 +18,8 @@ public class MainInterface extends Application {
     AssistantPane assistantPane;
     CFGPane cfgAssistantPane;
     CFGEditorPane cfgEditorPane;
+
+    ImageLogin imageDetectionPane;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -39,6 +41,9 @@ public class MainInterface extends Application {
 
         templateBuilderPane = new TemplateBuilderPane(this);
         templateBuilder = new Scene(templateBuilderPane,WIDTH,HEIGHT);
+
+        imageDetectionPane = new ImageLogin(this);
+        imageDetection = new Scene(imageDetectionPane,WIDTH,HEIGHT);
 
         stage.setScene(menu);
         stage.setResizable(false);
