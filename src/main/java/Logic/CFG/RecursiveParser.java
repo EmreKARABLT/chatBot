@@ -17,6 +17,8 @@ public class RecursiveParser {
      *                    recursive search which in our case the start symbol is
      *                    "<S>"
      * @param grammar     The grammar to be used for the recursive search
+     * @param rulesHashmap Hashmap for the input string when it is being parsed where the keys represent the non-terminals
+     *                     and values are the contents of the input string.
      * @return A boolean value, where true represents the input being part of the
      *         grammar, otherwise it isn't
      */
@@ -66,7 +68,7 @@ public class RecursiveParser {
     }
 
     /**
-     *
+     * @param filename is the path of where the grammar text file is located
      * @return Hashmap where the rules of the grammar text file are stored, where
      *         the keys are the non-terminals which are represented by "<>" and the
      *         values are the
@@ -79,7 +81,7 @@ public class RecursiveParser {
 
         Scanner scanner = new Scanner(new File(filename));
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().replaceAll("\\.", " .");
+            String line = scanner.nextLine().replaceAll("\\.", " .").replaceAll("\\?", " ?");
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()) {
                 String key = matcher.group(1);
@@ -98,11 +100,11 @@ public class RecursiveParser {
     }
 
     /**
-     *
+     * @param filename is the path of where the grammar text file is located
      * @return A list, where it stores the conditions and according responses for
      *         the action in the grammar text file
-     *         The conditions stores the string before the "|" symbol and the
-     *         response stores the string after the "|" symbol
+     *         The conditions stores the string before the "->" symbol and the
+     *         response stores the string after the "->" symbol
      * @throws FileNotFoundException
      */
 
@@ -130,6 +132,9 @@ public class RecursiveParser {
     /**
      *
      * @param input This is the input string given by the user
+     * @param rulesHashmap Hashmap for the input string when it is being parsed where the keys represent the non-terminals
+     *                     and values are the contents of the input string.
+     * @param filename is the path of where the grammar text file is located
      * @return A response to the provided user input
      * @throws IOException
      */
@@ -169,6 +174,7 @@ public class RecursiveParser {
     /**
      *
      * @param input is the input string given by the user
+     * @param filename is the path of where the grammar text file is located
      * @return This combines the parser for rules and actions to make the CFG and
      *         gives the response
      * @throws IOException
@@ -176,7 +182,7 @@ public class RecursiveParser {
     public static String respond(String input, String filename) throws IOException {
         Map<String, List<String>> grammar = parseGrammarFromFile(filename);
         Map<String, String> rulesHashmap = new HashMap<>();
-        input = input.replaceAll("\\.", " .");
+        input = input.replaceAll("\\.", " .").replaceAll("\\?", " ?");
         boolean match = hasMatch(Arrays.stream(input.split("\\s+")).toList(), "<S>", grammar, rulesHashmap) != 0;
         System.out.println(match);
         System.out.println(rulesHashmap);
