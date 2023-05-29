@@ -24,7 +24,7 @@ public class RecursiveParser {
      */
 
     public static int hasMatch(List<String> input, String startSymbol, Map<String, List<String>> grammar,
-            Map<String, String> rulesHashmap) {
+                               Map<String, String> rulesHashmap) {
 
         List<String> rules = grammar.get(startSymbol);
 
@@ -138,8 +138,8 @@ public class RecursiveParser {
      * @return A response to the provided user input
      * @throws IOException
      */
-    public static String matchInputWithAction(List<String> input, Map<String, String> rulesHashmap, String filename, 
-    Map<String, List<String>> grammar)
+    public static String matchInputWithAction(List<String> input, Map<String, String> rulesHashmap, String filename,
+                                              Map<String, List<String>> grammar)
             throws IOException {
         List<Response> actionsList = parseActionsFromFile(filename);
         int match = 0;

@@ -3,6 +3,7 @@ module view {
     requires javafx.fxml;
     requires opencv;
     requires java.desktop;
+    requires libtensorflow;
 
 
     opens view to javafx.fxml;

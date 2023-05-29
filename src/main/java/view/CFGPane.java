@@ -26,7 +26,7 @@ public class CFGPane extends BorderPane {
         HBox titlePane = new HBox();
         titlePane.getStylesheets().add("file:src/main/resources/view/mystyles.css");
         titlePane.getStyleClass().add("content-title");
-        Label title = new Label("            Template Assistant");
+        Label title = new Label("                 CFG Assistant");
 
         title.getStyleClass().add("title-label");
         this.getStylesheets().add("file:src/main/resources/view/mystyles.css");

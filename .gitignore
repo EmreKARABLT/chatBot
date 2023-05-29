@@ -1,3 +1,4 @@
 # Project exclude paths
 /target/
-/.vscode/
+/.vscode
+/src/main/java/Face/fr_model

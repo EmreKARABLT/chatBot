@@ -44,7 +44,9 @@ public class GrammerEditor {
         }
         try {
             FileWriter w = new FileWriter("src/main/java/Logic/CFG/grammar.txt");
-            w.write(write);
+            System.out.println(write);
+            w.append(write);
+            w.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

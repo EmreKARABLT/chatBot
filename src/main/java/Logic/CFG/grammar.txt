@@ -10,5 +10,3 @@ Action <weather> * <city> New York <time> tomorrow -> It will be sunny.
 Action <weather> * <city> Berlin <time> today -> It is rainy.
 Action <weather> * <pro> my mother <verb> is <city> New York <time> tomorrow -> It is stormy today.
 Action I have no idea
-
-

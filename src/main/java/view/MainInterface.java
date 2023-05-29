@@ -43,7 +43,7 @@ public class MainInterface extends Application {
         templateBuilder = new Scene(templateBuilderPane,WIDTH,HEIGHT);
 
         imageDetectionPane = new ImageLogin(this);
-        imageDetection = new Scene(imageDetectionPane,WIDTH,HEIGHT);
+        imageDetection = new Scene(imageDetectionPane,WIDTH+100,HEIGHT);
 
         stage.setScene(menu);
         stage.setResizable(false);
