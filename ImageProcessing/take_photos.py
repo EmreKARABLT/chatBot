@@ -29,13 +29,10 @@ def generate_dataset(name):
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
 
-    try :
-        cap = cv2.VideoCapture(1)
-    except:
-        cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0)
 
     img_id = 0
-    print("TURN YOUR HEAD")
+    print("Started to Take Pictures")
     while True:
         ret, frame = cap.read()
         cv2.flip(frame,0)
@@ -48,7 +45,6 @@ def generate_dataset(name):
 
             cv2.imwrite(file_name_path, face)
             cv2.putText(face, str(img_id), (50,50), cv2.FONT_HERSHEY_COMPLEX, 1, (0,255,0), 2 )
-
             cv2.imshow("Cropped_Face", face)
             if cv2.waitKey(1)==13 or int(img_id)==100:
                 break
@@ -58,4 +54,4 @@ def generate_dataset(name):
     print("Collecting samples is completed !!!")
 
 
-generate_dataset("")
+generate_dataset("1")
