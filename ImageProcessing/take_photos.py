@@ -58,4 +58,4 @@ def generate_dataset(name):
     print("Collecting samples is completed !!!")
 
 
-generate_dataset("Emre_Karabulut")
+generate_dataset("")
