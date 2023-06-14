@@ -1,16 +1,14 @@
 import cv2
-import pickle
 import json
-
-# Opening JSON file
 import numpy as np
-from keras import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
-from skimage.util import random_noise
 from tensorflow import keras
 import tensorflow as tf
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-model = keras.models.load_model("C:\\Users\\bpk_e.EMRE\\Desktop\\PROJECTS\\chatBot\\ImageProcessing\\Model\\fr_model_3")
+
+
+path_to_haar_cascade = "haarcascade_frontalface_default.xml"
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + path_to_haar_cascade)
+
+model = keras.models.load_model("..\\Model\\fr_model_3")
 
 try :
 
@@ -22,16 +20,11 @@ except :
 
 dim = 100
 
-with open('labels.json') as json_file:
+with open('..\\Model\\labels.json') as json_file:
     labels = json.load(json_file)
 print(labels)
 
-def hist_eq(img):
 
-    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-    equalized = clahe.apply(img)
-    noisy = random_noise(equalized, mode='gaussian', clip=True,mean=0.5 ,var=0.1)
-    return noisy
 margin = 5
 while True:
     ret, frame = cap.read()
@@ -50,14 +43,9 @@ while True:
 
             predictions = model.predict(img_array)
 
-            print(predictions)
             print(
-
                 "This image most likely belongs to {} with a {:.2f} percent confidence."
                 .format(labels[str(np.argmax(predictions))], 100 * np.max(predictions))
-
-
-
             )
         except:
             pass
