@@ -24,8 +24,13 @@ def generate_dataset(name):
     if len(name)  == 0 :
         raise "Enter Your Name as the parameter of this method"
 
-    folder_path = os.path.join("ImageProcessing","Data", "Images", name)
 
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    if not str(ROOT_DIR).endswith("ImageProcessing2"):
+        ROOT_DIR = os.path.join(ROOT_DIR , "ImageProcessing2")
+
+    folder_path = os.path.join(ROOT_DIR,"Data", "Images", name)
+    print(folder_path)
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
 
