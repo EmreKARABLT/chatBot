@@ -24,13 +24,12 @@ def generate_dataset(name):
     if len(name)  == 0 :
         raise "Enter Your Name as the parameter of this method"
 
-    folder_path = os.path.join("Data", "Images", name)
+    folder_path = os.path.join("ImageProcessing","Data", "Images", name)
 
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
 
     cap = cv2.VideoCapture(0)
-
     img_id = 0
     print("Started to Take Pictures")
     while True:
@@ -54,4 +53,4 @@ def generate_dataset(name):
     print("Collecting samples is completed !!!")
 
 
-generate_dataset("1")
+generate_dataset("Gabrijel")
