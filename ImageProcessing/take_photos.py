@@ -1,15 +1,15 @@
 import os
 
+import numpy as np
 import cv2
 def face_cropped(img , margin = 25):
-        path_to_haar_cascade = 'C:\\Users\\bpk_e.EMRE\\Desktop\\PROJECTS\\chatBotLastPhase\\ImageProcessing\\haarcascade_frontalface_default.xml'
-
-        face_classifier = cv2.CascadeClassifier(path_to_haar_cascade)
+        path_to_haar_cascade = "haarcascade_frontalface_default.xml"
+        face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + path_to_haar_cascade)
 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        faces = face_classifier.detectMultiScale(gray, 1.1, 5)
 
+        faces = face_classifier.detectMultiScale(gray, 1.1, 5)
 
         if len(faces) == 0 :
             print("NO FACE DETECTED!!")
@@ -21,12 +21,10 @@ def face_cropped(img , margin = 25):
                 pass
         return cropped_face
 def generate_dataset(name):
-
     if len(name)  == 0 :
         raise "Enter Your Name as the parameter of this method"
 
-    folder_path = os.path.join("Data", "Images", name)
-    print(folder_path)
+    folder_path = os.path.join("ImageProcessing","Data", "Images", name)
 
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
@@ -38,7 +36,7 @@ def generate_dataset(name):
     while True:
         ret, frame = cap.read()
         cv2.flip(frame,0)
-        if face_cropped(frame) is not None:
+        if face_cropped(frame ) is not None:
             img_id+=1
             face = cv2.resize(face_cropped(frame), (250,250))
 
@@ -56,4 +54,4 @@ def generate_dataset(name):
     print("Collecting samples is completed !!!")
 
 
-generate_dataset("1")
+generate_dataset("")
