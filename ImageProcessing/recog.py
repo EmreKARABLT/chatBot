@@ -1,4 +1,5 @@
 import cv2
+
 def face_cropped(img):
         face_classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -9,6 +10,8 @@ def face_cropped(img):
         for (x,y,w,h) in faces:
             cropped_face = img[y:y+h,x:x+w]
         return cropped_face
+
+
 def generate_dataset(name):
     cap = cv2.VideoCapture(0)
     img_id = 0
@@ -30,7 +33,7 @@ def generate_dataset(name):
     cap.release()
     cv2.destroyAllWindows()
     print("Collecting samples is completed !!!")
-generate_dataset("Alex")
+# generate_dataset("Alex")
 import numpy as np
 def my_label(image_name):
     name = image_name.split('.')[-3]
