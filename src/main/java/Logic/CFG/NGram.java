@@ -2,7 +2,6 @@ package Logic.CFG;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +51,7 @@ public class NGram {
         return lastWords;
     }
 
-    private static List<String> predictWords(String input, Map<String, List<String>> grammar) throws IOException {
+    public static List<String> predictWords(String input, Map<String, List<String>> rules) throws IOException {
         getMapping(rules, "<S>", mapping, new ArrayList<>());
         String[] words = input.split(" ");
         String currentWord = words[0];

@@ -75,7 +75,7 @@ public class RecursiveParser {
      *         strings/words not contained in the "<>" brackets
      * @throws IOException
      */
-    static Map<String, List<String>> parseGrammarFromFile(String filename) throws IOException {
+    public static Map<String, List<String>> parseGrammarFromFile(String filename) throws IOException {
         Map<String, List<String>> grammar = new HashMap<>();
         Pattern pattern = Pattern.compile("^Rule (<[a-zA-Z]*>) (.*)$");
 
