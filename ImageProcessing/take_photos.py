@@ -26,15 +26,15 @@ def generate_dataset(name):
 
 
     ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-    if not str(ROOT_DIR).endswith("ImageProcessing2"):
-        ROOT_DIR = os.path.join(ROOT_DIR , "ImageProcessing2")
+    if not str(ROOT_DIR).endswith("ImageProcessing"):
+        ROOT_DIR = os.path.join(ROOT_DIR , "ImageProcessing")
 
     folder_path = os.path.join(ROOT_DIR,"Data", "Images", name)
     print(folder_path)
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
 
     img_id = 0
     print("Started to Take Pictures")
@@ -59,4 +59,4 @@ def generate_dataset(name):
     print("Collecting samples is completed !!!")
 
 
-generate_dataset("")
+generate_dataset("Anna")
