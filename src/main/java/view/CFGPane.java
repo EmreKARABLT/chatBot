@@ -60,38 +60,27 @@ public class CFGPane extends BorderPane {
         });
 
         TextField textField = new TextField();
-        TextArea predictionText = new TextArea();
         Map<String, List<String>> rules = RecursiveParser.parseGrammarFromFile("src/main/java/Logic/CFG/grammar.txt");
         textField.setPromptText("Enter your text here");
         textField.getStyleClass().add("text-field");
-        predictionText.setEditable(false);
+     
 
-        AtomicInteger currentWordIndex = new AtomicInteger(0);
-        AtomicReference<List<String>> nextWordsRef = new AtomicReference<>(new ArrayList<>());
 
         textField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            int index = 0;
             if (event.getCode() == KeyCode.TAB) {
-                event.consume(); 
-                String currentText = textField.getText();
-                String[] words = currentText.split(" ");
+
+                String[] words = textField.getText().split(" ");
                 String lastWord = words[words.length - 1];
+                event.consume();
 
                 try {
                     List<String> nextWords = NGram.predictWords(lastWord, rules);
-                    nextWordsRef.set(nextWords);
+                    textField.appendText(" " + nextWords.get(index));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-
-                List<String> nextWords = nextWordsRef.get();
-                if (!nextWords.isEmpty()) {
-                    String nextWord = nextWords.get(currentWordIndex.get());
-                    textField.appendText(" " + nextWord);
-                }
-            } else if (event.getCode() == KeyCode.ALT) {
-                List<String> nextWords = nextWordsRef.get();
-                currentWordIndex.set((currentWordIndex.get() + 1) % nextWords.size());
-            }
+            } 
         });
 
         textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
