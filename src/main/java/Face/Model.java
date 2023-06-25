@@ -13,7 +13,9 @@ import org.opencv.imgcodecs.Imgcodecs;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 
@@ -23,44 +25,49 @@ public class Model {
     private SavedModelBundle model;
     private Session session ;
     private Session.Runner runner;
-    private String model_path = "src/main/java/Face/fr_model";
+    private String model_path = "ImageProcessing/Model/final_model";
+    private JsonParser json = new JsonParser();
     public Model(){
         this.model = SavedModelBundle.load(model_path , "serve");
+
     }
 
-    public int predict(float[][][][] image , double confidenceThreshold){
+    public String predict(float[][][][] image , double confidenceThreshold){
         float[][] dst = new float[1][7];
         int index = -1;
-        if(model==null) return -1;
+        if(model==null) return "";
+
         try {
             this.session = model.session();
             this.runner = session.runner();
 
             // Input tensor
             Tensor input = Tensor.create(image);
-            Tensor output = runner.feed("serving_default_input_input", input).fetch("StatefulPartitionedCall:0").run().get(0);
+            Tensor output = runner.feed("serving_default_input", input).fetch("StatefulPartitionedCall:0").run().get(0);
 
             // Get the predictions
             output.copyTo(dst);
             index = maxIndex(dst , confidenceThreshold);
 
+            System.out.println(Arrays.deepToString(dst) + " -- " + json.getName(index));
+
         }catch (NullPointerException e){
             System.out.println("Model is Null");
+            return "";
         }
-
-
-        return index;
+        return json.getName(index);
     }
     public int maxIndex(float[][] array , double confidenceThreshold){
-        float max = Integer.MIN_VALUE;
-        int max_index = 0;
-        for (int i = 0; i < array.length; i++) {
-            if( (array[0][i] > max) && (array[0][i]>confidenceThreshold )) {
+
+        int maxIndex = -1;
+        double max = Integer.MIN_VALUE;
+        for (int i = 0; i < array[0].length; i++) {
+            if( (array[0][i] >= max) && array[0][i] > confidenceThreshold) {
                 max = array[0][i];
-                max_index = i ;
+                maxIndex = i;
             }
         }
-        return max_index;
+        return maxIndex;
     }
 
 //    public static void main(String[] args) throws IOException {

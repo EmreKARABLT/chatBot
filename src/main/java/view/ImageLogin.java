@@ -27,7 +27,7 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-
+import javafx.application.Application;
 
 
 import javax.imageio.ImageIO;
@@ -94,8 +94,8 @@ public class ImageLogin extends BorderPane{
         ImageLogin login;
         public CameraThread(ImageLogin login){
             OpenCV.loadLocally();
-            cnn = new Haar();
-            video = new VideoCapture(0);
+            cnn = new CNN();
+            video = new VideoCapture(1);
             this.login = login;
         }
         @Override
@@ -104,6 +104,7 @@ public class ImageLogin extends BorderPane{
             while(true){
                 video.read(f);
                 cnn.evaluate(f);
+
                 if(cnn.positions.length!=0){
                     login.converstation.setVisible(true);
                 }else{
@@ -130,11 +131,16 @@ public class ImageLogin extends BorderPane{
         private Mat drawRectangle(Mat a,int[][] posistions){
             int thickness = 2;
             Scalar color = new Scalar(0, 0, 255); // Red color in BGR
-
+            Scalar textColor = new Scalar(0, 255 , 0);
             for (int i = 0; i < posistions.length; i++) {
                 Point topLeft = new Point(posistions[i][0], posistions[i][1]);
                 Point bottomRight = new Point(posistions[i][0]+posistions[i][2], posistions[i][1]+posistions[i][3]);
                 Imgproc.rectangle(a, topLeft, bottomRight, color, thickness);
+
+
+                Point textLoc = new Point(posistions[i][0]-15, posistions[i][1]);
+                if(cnn.names != null )
+                    Imgproc.putText(a, cnn.names[i], textLoc , Imgproc.FONT_HERSHEY_SIMPLEX, 0.7, textColor, thickness);
             }
 
             return a;
