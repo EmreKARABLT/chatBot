@@ -1,5 +1,3 @@
-import tensorflow as tf 
+import cv2
 
-print(tf.config.list_physical_devices('GPU'))
-print(tf.__version__)
-
+cv2.CascadeClassifier()

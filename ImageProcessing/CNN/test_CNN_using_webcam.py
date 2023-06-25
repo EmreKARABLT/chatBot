@@ -10,12 +10,7 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + path_to_haar_cascad
 
 model = keras.models.load_model("..\\Model\\fr_model_3")
 
-try :
-
-    cap = cv2.VideoCapture(1)
-
-except :
-    cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0)
 
 
 dim = 100
@@ -32,7 +27,7 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2RGB)
     np_image = np.array(gray, dtype="uint8")
 
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
     x  = y = w = h = 0
     for x, y , w , h in faces :
         rect_gray = np_image[y-margin:y + h+margin, x-margin:x + w+margin]
