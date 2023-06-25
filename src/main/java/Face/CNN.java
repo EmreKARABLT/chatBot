@@ -1,4 +1,5 @@
 package Face;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class CNN extends FaceDetection {
     private CascadeClassifier faceCascade;
     private String filenameFaceCascade = "src/main/java/Face/haarcascade_frontalface_default.xml";
     private Model model ;
+
     public CNN() {
         OpenCV.loadLocally();
         this.faceCascade = new CascadeClassifier();
@@ -27,16 +29,19 @@ public class CNN extends FaceDetection {
     }
 
     public void evaluate(Mat frame) {
+        double CONFIDENCE_THRESHOLD = 0.7;
+
         Mat frameGray = new Mat();
         Imgproc.cvtColor(frame, frameGray, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.equalizeHist(frameGray, frameGray);
         // -- Detect faces
+
         MatOfRect faces = new MatOfRect();
-        faceCascade.detectMultiScale(frameGray, faces,1.1,11);
+        faceCascade.detectMultiScale(frameGray, faces,1.3,5);
         List<Rect> listOfFaces = faces.toList();
 
         this.positions = new int[listOfFaces.size()][4];
         this.names = new String[listOfFaces.size()];
+
         for (int i = 0; i < listOfFaces.size() ; i++) {
             Rect face = listOfFaces.get(i);
             Imgproc.rectangle(frame, new Point(face.x, face.y), new Point(face.x + face.width, face.y + face.height), new Scalar(0, 0, 255));
@@ -46,20 +51,17 @@ public class CNN extends FaceDetection {
 
             Mat roiImage = new Mat(frameGray, face);
             Mat resizedImage = new Mat();
-            int newWidth = 224 , newHeight= 224 ;
+            int newWidth = 100 , newHeight= 100 ;
 
             Size newSize = new Size(newWidth, newHeight);
             Imgproc.resize(roiImage, resizedImage, newSize);
 
             float[][][][] reshapedFloatImage = convertMatTo4dArray(resizedImage);
-            int indexOfMax = model.predict(reshapedFloatImage , 0.2);
-            names[i] = ""+indexOfMax;
+            String name = model.predict(reshapedFloatImage , CONFIDENCE_THRESHOLD);
+
+            names[i] = name;
 
         }
-
-        System.out.println("index of highest matching - > " + Arrays.toString(names));
-        System.out.println("x,y,width,height" + Arrays.deepToString(positions));
-        //-- Show what you got
         HighGui.imshow("Capture - Face detection", frame );
     }
     public float[][][][] convertMatTo4dArray( Mat image){
@@ -75,17 +77,6 @@ public class CNN extends FaceDetection {
                 image_float[0][y][x][0] = grayValue;
             }
         }
-//        Mat mat = new Mat();
-//        mat.create(224,224,1);
-//        for (int y = 0; y < height; y++) {
-//            for (int x = 0; x < width; x++) {
-//                float gray = image_float[0][y][x][0];
-//                mat.put(y,x, gray);
-//
-//                // Store the grayscale pixel value in the 2D array
-//            }
-//        }
-//        HighGui.imshow("a ", mat);
         return image_float;
 
     }

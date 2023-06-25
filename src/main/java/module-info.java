@@ -4,6 +4,7 @@ module view {
     requires opencv;
     requires java.desktop;
     requires libtensorflow;
+    requires com.google.gson;
 
 
     opens view to javafx.fxml;
