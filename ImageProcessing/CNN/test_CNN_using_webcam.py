@@ -10,7 +10,7 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + path_to_haar_cascad
 
 model = keras.models.load_model("..\\Model\\final_model")
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 
 dim = 100

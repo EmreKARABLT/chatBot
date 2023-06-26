@@ -95,7 +95,7 @@ public class ImageLogin extends BorderPane{
         public CameraThread(ImageLogin login){
             OpenCV.loadLocally();
             cnn = new CNN();
-            video = new VideoCapture(1);
+            video = new VideoCapture(0);
             this.login = login;
         }
         @Override
