@@ -1,4 +1,5 @@
 # Project 2-2 Group 4
+Gabrijel Radovcic
 ## Chat Bot
 # Getting Started
 
